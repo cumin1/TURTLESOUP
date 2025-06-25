@@ -32,9 +32,9 @@ public class UserController {
 
     @PostMapping("/register")
     @Operation(summary = "用户注册")
-    public String register(@RequestBody UserDTO userDTO){
+    public Result register(@RequestBody UserDTO userDTO){
         log.info("用户注册: {}",userDTO.toString());
         Result result = userService.register(userDTO);
-        return null;
+        return result;
     }
 }

@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class UserDTO implements Serializable {
     // 用户名（唯一）
     private String username;
-    // 密码哈希
+    // 密码
     private String password;
     // 电子邮箱（唯一）
     private String email;
