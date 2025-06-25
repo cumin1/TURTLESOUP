@@ -11,3 +11,30 @@ spring:
     hikari:
       connection-timeout: 20000
       maximum-pool-size: 10
+
+logging:
+  level:
+    com:
+      turtle:
+        mapper: debug
+        service: info
+        controller: info
+
+# springdoc-openapi????
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.turtle.controller  #????????controller????
+
+# knife4j???????????????????????
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
