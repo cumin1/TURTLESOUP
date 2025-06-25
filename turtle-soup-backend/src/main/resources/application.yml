@@ -1,12 +1,13 @@
 spring:
   application:
     name: turtle-soup-backend
+  profiles:
+    active: dev
   datasource:
-    #?????????
-    driver-class-name: com.mysql.jdbc.Driver
-    #?????url
-    url: jdbc:mysql://127.0.0.1:3306/spring-boot-data-learn
-    #??????
-    username: root
-    #?????
-    password: 123456
+    driver-class-name: ${turtle.datasource.driver-class-name}
+    url: ${turtle.datasource.url}
+    username: ${turtle.datasource.username}
+    password: ${turtle.datasource.password}
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 10
