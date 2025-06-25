@@ -67,6 +67,8 @@ CREATE TABLE soup_comment (
                               FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
+ALTER TABLE user CHANGE COLUMN password_hash password VARCHAR(255) NOT NULL;
+
 -- 1. 用户
 INSERT INTO user (username, password_hash, email, avatar_url, created_at, last_login) VALUES
                                                                                           ('alice', 'hash1', 'alice@example.com', NULL, NOW(), NOW()),
