@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: turtle-soup-backend
+  datasource:
+    #?????????
+    driver-class-name: com.mysql.jdbc.Driver
+    #?????url
+    url: jdbc:mysql://127.0.0.1:3306/spring-boot-data-learn
+    #??????
+    username: root
+    #?????
+    password: 123456
