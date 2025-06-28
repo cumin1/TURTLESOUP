@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海龟汤题目数据</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            font-size: 12px;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #e8f5e8;
+        }
+        .question {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .answer {
+            color: #34495e;
+            line-height: 1.4;
+        }
+        .id {
+            text-align: center;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .difficulty {
+            text-align: center;
+            font-weight: bold;
+        }
+        .tags {
+            color: #27ae60;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>海龟汤题目数据表</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th width="3%">编号</th>
+                    <th width="15%">标题</th>
+                    <th width="35%">题目</th>
+                    <th width="35%">答案</th>
+                    <th width="4%">难度</th>
+                    <th width="8%">标签</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="id">1</td>
+                    <td class="question">火车隧道自杀</td>
+                    <td class="question">一个人坐火车去临镇看病，看完之后病全好了。回来的路上火车经过一个隧道，这个人就跳车自杀了。为什么?</td>
+                    <td class="answer">因为他看好的是眼睛的病。经过隧道，以为眼睛又看不见了。经受不住打击，自杀了。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">经典,悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">2</td>
+                    <td class="question">葬礼上的男子</td>
+                    <td class="question">有母女三人，母亲死了，姐妹俩去参加葬礼。妹妹在葬礼上遇见了一个很有型的男子，并对他一见倾心。会到家后，妹妹把姐姐杀了。为什么?</td>
+                    <td class="answer">因为家里如果再死一个人，又可以举行一次葬礼，那个男子又会来参加葬礼，妹妹就又可以见到他了。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">经典,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">3</td>
+                    <td class="question">救生艇上的男子</td>
+                    <td class="question">男子精神正常，但却在船上挥起刀，将许多人的手一一砍断。为什么?</td>
+                    <td class="answer">发生了船难，男子在救生艇上。救生艇已经达到承载人数的上限。许多溺水者仍然不断游过来，想要抓住救生艇。为了避免救生艇翻覆，男子只好将溺水者伸出来的手一一砍断。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">经典,悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">4</td>
+                    <td class="question">最后一张签名</td>
+                    <td class="question">一名男子A请另一名男子B签上名字在纸上，随即杀死了B，为什么?</td>
+                    <td class="answer">男子B是名知名歌手，男子A想要他最后一张签名。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">经典</td>
+                </tr>
+                <tr>
+                    <td class="id">5</td>
+                    <td class="question">旁观者的笑容</td>
+                    <td class="question">最惨绝人寰的事情发生了，但旁观者发现凶手后却笑了，请问发生了什么事?</td>
+                    <td class="answer">旁观者其实是读者，看推理小说时因为自己猜测的作案凶手和最后揭晓的结果一样，所以就满足地笑了。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">烧脑,搞笑</td>
+                </tr>
+                <tr>
+                    <td class="id">6</td>
+                    <td class="question">女明星的帽子</td>
+                    <td class="question">女明星养了一个女儿，从小她都会时不时给她的女儿戴一顶帽子，有一天她带她女儿去医院，女儿在医院知道真相后就自杀了，为什么?</td>
+                    <td class="answer">女明星毁过容，养女儿是为了得到移植脸皮到她自己的脸上，那顶帽子是她自己的，时不时给女儿戴上是为了测量女儿头部大小，一旦刚好合适，就可以带去医院做脸部移植手术。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">经典,悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">7</td>
+                    <td class="question">眼疾患者的绝望</td>
+                    <td class="question">跳火车问题：一个人坐火车去邻镇看病，看完之后病全好了。回来的路上火车经过一个隧道，这个人就跳车自杀了，为什么?</td>
+                    <td class="answer">他的病是眼疾，完全瞎了，看完病眼睛复明，过隧道时突如其来的黑暗让他以为自己又瞎了，于是内心崩溃自杀了。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">经典,悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">8</td>
+                    <td class="question">水草与头发</td>
+                    <td class="question">水草问题：有个男子跟他女友去河边散步，突然他的女友掉进河里了，那个男子就急忙跳到水里去找，可没找到他的女友，他伤心的离开了这里。过了几年后，他故地重游，这时看到有个老人家在钓鱼，可那老人家钓上来的鱼身上没有水草，他就问那老人家为什么鱼身上没有沾到一点水草，那老人家说："你不知道啊，这河从没有长过水草。"说到这时那男子突然跳到水里，自杀了，为什么?</td>
+                    <td class="answer">男子曾抓到女友头发，却以为是水草松手了，女友几乎等于死在男子手里。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">经典,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">9</td>
+                    <td class="question">葬礼上的邂逅</td>
+                    <td class="question">葬礼故事的问题：有母女三人，母亲死了，姐妹俩去参加葬礼，妹妹在葬礼上遇见了一个很帅的男子，并对他一见倾心。但是葬礼后那个男子就不见了，妹妹怎么找也找不到他。后来过了一个月，妹妹把姐姐杀了，为什么?</td>
+                    <td class="answer">为了再举办一次葬礼，从而再次见到那个男子。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">经典,悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">10</td>
+                    <td class="question">半根火柴</td>
+                    <td class="question">半根火柴问题：有一个人在沙漠中，头朝下死了，不远处散落着几个行李箱子，而这个人手里紧紧地抓着半个火柴，推理这个人是怎么死的?</td>
+                    <td class="answer">这个人和朋友乘热气球飞在空中，热气球故障，丢光行李仍超重一些，于是抓阄，抽到半个火柴的被扔了下去。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">经典,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">11</td>
+                    <td class="question">满地木屑</td>
+                    <td class="question">满地木屑问题：马戏团里有两个侏儒，瞎子侏儒比另一个侏儒矮，马戏团只需要一个侏儒，马戏团里的侏儒当然是越矮越好了。两个侏儒决定比谁的个子矮，个子高的就去自杀。可是，在约定比个子的前一天，瞎子侏儒也就是那个矮的侏儒已经在家里自杀死了。在他的家里只发现木头做的家具和满地的木屑。问他为什么自杀?</td>
+                    <td class="answer">瞎侏儒的拐杖被另一个侏儒弄断了，于是瞎侏儒以为突然长高了。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">经典,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">12</td>
+                    <td class="question">夜半敲门</td>
+                    <td class="question">夜半敲门问题：一个人住在山顶的小屋里，半夜听见有敲门声音，但是他打开门却没有人，于是去睡了。第二天，有人在山脚下发现死尸一具，警察来把山顶的那人带走了。为什么?</td>
+                    <td class="answer">山顶的小屋的门前是悬崖，悬崖下的人好不容易才爬上来，想要敲门求救。一开门，就又被推了下去。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">经典,悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">13</td>
+                    <td class="question">一见钟情</td>
+                    <td class="question">【一见钟情】你和你的男友是校友，他比你大三届，马上就要毕业了。你总感觉和他心有灵犀，一见钟情，于是你们约好了等你到了法定结婚年龄马上结婚，快要过国庆了，男友对你说，不如假期你不要回去了，来我家见见我父母吧。你欣然同意。然而，男友的父母一看到你的脸，大惊失色，坚决反对你们结婚交往。这是为什么呢?</td>
+                    <td class="answer">这是刚刚改革开放，计划生育的年代。你是超生的孩子，为了保住工作，生下你之后父母把你送到乡下给远方亲戚抚养，并且改了姓。父母一直对亲戚进行着经济援助，得知你考上了这里的大学父母也很开心，而且也快要退休了。正在考虑是不是要联系到你让你回到这个家庭，谁知道你们亲兄妹竟然相爱了，人间悲剧。</td>
+                    <td class="difficulty">5</td>
+                    <td class="tags">烧脑,悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">14</td>
+                    <td class="question">跟踪狂</td>
+                    <td class="question">【跟踪狂】"那个人又在跟着我了"小明在心里暗暗地想，并且加快了脚步希望甩开跟着自己的那个人。自从这个学期开始，小明每天上学的路上总有一个人跟着自己，有的时候是走路有的时候是骑车，有的时候是开车。每次跟到学校门口，那个人就不再行动了，小明感到很害怕，你能帮帮小明吗?</td>
+                    <td class="answer">小明是你数学课本上的人物，经典应用题，小明从家出发以每小时XX米的速度均速往学校出发。追踪者从B地出发，以每小时XX N米的速度追赶小明……解决的方法很简单，小明只要改一个复杂点的名字就不再会出现在课本上啦。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">搞笑</td>
+                </tr>
+                <tr>
+                    <td class="id">15</td>
+                    <td class="question">仪式</td>
+                    <td class="question">【仪式】最近你的父母总是吵架，你也觉得你的母亲状态有些奇怪，她总是心不在焉，偷偷问你怎么给别人转账……有时候会在家里无声地挥舞双手像在进行什么仪式。一天晚饭过后，你父亲出门去散步了，你母亲也悄悄出了门，已经起了疑心的你跟在她身后……啊，原来如此……</td>
+                    <td class="answer">你母亲跳广场舞，你父亲以为她外面有人了，转账是为了买跳舞用的团队服装，手舞足蹈是为了练习舞蹈。而且为了防止扰民，所有的广场舞阿姨都是戴着耳机无声跳舞的，看起来像是在进行什么神秘仪式似的。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">搞笑</td>
+                </tr>
+                <tr>
+                    <td class="id">16</td>
+                    <td class="question">日记</td>
+                    <td class="question">故事【日记】2019年2月，女儿不去上学了，我劝不动她。2019年6月，女儿每天盯着电视和电脑看，我怕她眼睛弄坏了。2019年12月，女儿好像开朗了一些，看到她经常和朋友语音聊天。2020年3月，女儿笑了，说她做了一件大好事，我也很高兴。2020年5月，女儿的状态恶化了，整夜不睡觉，她也不和我说话。2020年6月，总觉得最近家里开销特别大，嗯……?是我糊涂了吗。2020年10月，女儿出门了，最近疫情好些了之后她经常出门，好像朋友也变多了，太好了。2021年2月，我收到了一张律师函，上面写着女儿的名字，怎么会?!2021年8月，我把女儿禁足了</td>
+                    <td class="answer">女儿因为一些原因拒绝去上学，6月程晴令上线，女儿沉迷其中。同年12月，女儿混了肖战的饭圈。这期间，女儿一直在为它做数据女工。20年3月，AO3被举报。5月，肖战遭到大批网友抵制，资本开始审视这个东西是不是值得投资。6月光点上线，女儿偷家里的钱买数字专。疫情好转后，女儿照例出门参加饭圈活动，渐渐开始认清它的真面目。21年2月，肖战状告"黑粉"。8月肖战胜诉，粉丝被罚3W，故事中的这位父/母把女儿彻底禁足了。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">17</td>
+                    <td class="question">初恋之死</td>
+                    <td class="question">【初恋之死】今天是你初恋出殡的日子，她是远近闻名的美女，看了她一眼之后谁都无法忘却她的美貌，乌木般的秀发，吹弹可破如雪一样的肌肤。她生前也十分爱护自己的美貌，时下最流行的化妆品，最时髦的裙子，她都是第一时间拥有的。这样如同公主一般的她，追求者也像蚂蚁一样多，你就是其中之一，在她生前你从没能正面好好地看她一眼，在这最后一刻，你想好好地最后再看她一眼，将那美貌永远印在心间。往铺着天鹅绒的棺木中一瞧，她还是穿着最爱的那条墨绿色裙子，沿着裙角往上看去，你惊呼一声，捂着嘴巴后退几步，这……老妇人是谁?</td>
+                    <td class="answer">时间是中世纪，地点是欧洲，那时候还没有萃取天然绿色的工艺，绿色的染料包含砷，也就是砒霜的主要成分，长期穿着就会中毒。那时候的美女追求如同死人一样白的肤色，也大量使用包含水银的粉底，长期使用使人皮肤溃烂崩坏，看起来像是老人一样。棺木中的初恋美女，越是走在时尚的前沿越是死地快，在人生最美好的时刻就中毒而死。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">悬疑,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">18</td>
+                    <td class="question">粉色连衣裙的女人</td>
+                    <td class="question">【粉色连衣裙的女人】你的新邻居是一个独居的年轻男人，有一天你吃完宵夜回家看到一个穿粉色连衣裙浓妆艳抹的长发女人进了邻居家的门。深夜，隔壁传来争吵摔东西的声音，在安静的楼道里格外刺耳。第二天你在邻居家门口的垃圾袋里看到了被剪碎的粉色连衣裙和一把长发，你询问了邻居，他却支支吾吾不肯明说……你要报警吗?</td>
+                    <td class="answer">邻居是一个有异装癖的男人，因此一直独身。邻居的家人不知道这个情况，一直催他结婚，他就从父母的家里搬了出来，这一天邻居女装完回家，被你看到了。没想到邻居的妈妈早就在家里等着他，看到女装的邻居，俩人大吵一架，母亲剪碎了他的粉色裙子和假发，这就是你所看到的事情。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">19</td>
+                    <td class="question">我要结婚了</td>
+                    <td class="question">【我要结婚了】你的朋友D约你作为伴郎参加他的婚礼，而在婚礼的前几天，你接到一通来电，电话那头说："您好，是永远的十八岁先生吗，我是XX市警察局，请配合调查"你的反应是?</td>
+                    <td class="answer">你和朋友是网友，互相只知道网名。并且你们俩都是宅友魔法师，朋友D所谓的婚礼是和纸片人结婚，现实当中性格内向没有朋友的他向你这个唯一的朋友发起了邀请。而在见面的前几天，debu朋友因为心血管疾病暴毙在家，等到发现的时候已经来不及了，警方调查了他电脑里的记录找到了你。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">20</td>
+                    <td class="question">三个电话</td>
+                    <td class="question">【三个电话】你第三次接到了老师的电话，让你不用去学校了。你一边崩溃大哭，一边定下一张火车票。</td>
+                    <td class="answer">你是一名离乡打工人员，把孩子留在了家乡。你的孩子因为优秀的成绩受到了校园霸凌，因为害怕父母担心，她决定隐瞒这件事。为了融入集体她开始不写作业逃课故意答错题，支教老师发现了这个情况，打电话给你，而你没法回老家。即便孩子这么做了，情况并没有改善，还是被同学欺负，愈演愈烈，孩子开始自残希望得到你的关心，老师又打电话给你，你依然没有回家。终于，这一天孩子从教学楼上一跃而下结束了自己的生命，你终于要回家了，见孩子最后一面。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">悬疑,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">21</td>
+                    <td class="question">外卖</td>
+                    <td class="question">【外卖】"喂，您的外卖到了。"什么外卖，我没有叫过外卖啊，你这么想着。随后你问你的妹妹，你叫过外卖了?妹妹摇了摇头。你又问你女朋友，是你叫的外卖?女朋友惊恐地摇了摇头。正在你想要拒绝外卖小哥的时候，门外冲进来几个壮汉，一把把你按倒在地。</td>
+                    <td class="answer">这是一名伪装成外卖员的警察，而屋子里的是一个传/销组织，主角把自己的妹妹和女朋友都骗进了组织里，其中女友偷偷报了警向警察求助。警察送了你一副银手镯。*此处妹妹和女友可以替换成任意亲友。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">22</td>
+                    <td class="question">你喊破喉咙都没有人会来救你的</td>
+                    <td class="question">【你喊破喉咙都没有人会来救你的】你是孤儿，收养人从来也不允许你走出家门一步，你每天在屋子里大叫，砸东西，但是没有人在意你没有人来救你。有一天他说要带你出门，到了那个地方之后脸上被罩上了什么东西，你晕了过去……</td>
+                    <td class="answer">你是一只小公猫，主人送你去尬蛋。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">搞笑</td>
+                </tr>
+                <tr>
+                    <td class="id">23</td>
+                    <td class="question">大学生回家</td>
+                    <td class="question">我是一名大学生，在异地上学。这一天爸爸妈妈给我打电话说他们想我了，让我找个时间回趟家。于是我趁着五一回家了，到家后我打电话给爸爸说我回来了，爸爸回家打开门的一瞬间却疯了。</td>
+                    <td class="answer">我患有精神疾病，偶尔会做一些极端的事情，后来开始吃药治疗。上了大学后，我觉得自己已经好了，也怕被大学同学发现和歧视，所以瞒着爸妈偷偷停止服药。这一天爸爸妈妈打电话叫我回家，我也想回家了!就找了最近的假期回去。回到家后我把妈妈杀了，然后剖开了她的肚子取出了子宫，我拿着手里的子宫打电话给爸爸："爸，我回家了!"</td>
+                    <td class="difficulty">5</td>
+                    <td class="tags">悬疑,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">24</td>
+                    <td class="question">红色高跟鞋</td>
+                    <td class="question">一位女士去鞋店里买了一双红色高跟鞋，这双高跟鞋预示了她今晚的死亡。</td>
+                    <td class="answer">女士是杂技团的一名演员，那天她去买了一双红色的高跟鞋。晚上她穿着这双高跟鞋就去马戏团上班了，她的工作是头顶苹果，配合另外一名男演员表演小李飞刀。结果因为她的高跟鞋，她比平时高出了几公分，没有调整过来的男演员失手将刀插到了她的脑袋上。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">25</td>
+                    <td class="question">三兄弟的床</td>
+                    <td class="question">我有两个哥哥，我们三兄弟自小就睡在一张床上。后来有一天二哥因为生病死了，不久后我把大哥也杀了。</td>
+                    <td class="answer">我的两个哥哥是双胞胎。从小我们关系就特别好，同睡一张床。大哥睡我左边，二哥睡我右边，十几年了，我已经习惯了这样。可是有一天二哥却因为得了大病死了。我床的右边就这样空了。我很不习惯，突然我想到了!把大哥砍成两半不就好了吗，今天晚上我又睡得好香～</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">悬疑,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">26</td>
+                    <td class="question">三兄弟的床</td>
+                    <td class="question">我有两个哥哥，我们三兄弟自小就睡在一张床上。后来有一天二哥因为生病死了，不久后我把大哥也杀了。</td>
+                    <td class="answer">我的两个哥哥是双胞胎。从小我们关系就特别好，同睡一张床。大哥睡我左边，二哥睡我右边，十几年了，我已经习惯了这样。可是有一天二哥却因为得了大病死了。我床的右边就这样空了。我很不习惯，突然我想到了!把大哥砍成两半不就好了吗，今天晚上我又睡得好香～</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">悬疑,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">27</td>
+                    <td class="question">红色高跟鞋</td>
+                    <td class="question">一位女士去鞋店里买了一双红色高跟鞋，这双高跟鞋预示了她今晚的死亡。</td>
+                    <td class="answer">女士是杂技团的一名演员，那天她去买了一双红色的高跟鞋。晚上她穿着这双高跟鞋就去马戏团上班了，她的工作是头顶苹果，配合另外一名男演员表演小李飞刀。结果因为她的高跟鞋，她比平时高出了几公分，没有调整过来的男演员失手将刀插到了她的脑袋上。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">28</td>
+                    <td class="question">大学生回家</td>
+                    <td class="question">我是一名大学生，在异地上学。这一天爸爸妈妈给我打电话说他们想我了，让我找个时间回趟家。于是我趁着五一回家了，到家后我打电话给爸爸说我回来了，爸爸回家打开门的一瞬间却疯了。</td>
+                    <td class="answer">我患有精神疾病，偶尔会做一些极端的事情，后来开始吃药治疗。上了大学后，我觉得自己已经好了，也怕被大学同学发现和歧视，所以瞒着爸妈偷偷停止服药。这一天爸爸妈妈打电话叫我回家，我也想回家了!就找了最近的假期回去。回到家后我把妈妈杀了，然后剖开了她的肚子取出了子宫，我拿着手里的子宫打电话给爸爸："爸，我回家了!"</td>
+                    <td class="difficulty">5</td>
+                    <td class="tags">悬疑,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">29</td>
+                    <td class="question">你喊破喉咙都没有人会来救你的</td>
+                    <td class="question">【你喊破喉咙都没有人会来救你的】你是孤儿，收养人从来也不允许你走出家门一步，你每天在屋子里大叫，砸东西，但是没有人在意你没有人来救你。有一天他说要带你出门，到了那个地方之后脸上被罩上了什么东西，你晕了过去……</td>
+                    <td class="answer">你是一只小公猫，主人送你去尬蛋。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">搞笑</td>
+                </tr>
+                <tr>
+                    <td class="id">30</td>
+                    <td class="question">外卖</td>
+                    <td class="question">【外卖】"喂，您的外卖到了。"什么外卖，我没有叫过外卖啊，你这么想着。随后你问你的妹妹，你叫过外卖了?妹妹摇了摇头。你又问你女朋友，是你叫的外卖?女朋友惊恐地摇了摇头。正在你想要拒绝外卖小哥的时候，门外冲进来几个壮汉，一把把你按倒在地。</td>
+                    <td class="answer">这是一名伪装成外卖员的警察，而屋子里的是一个传/销组织，主角把自己的妹妹和女朋友都骗进了组织里，其中女友偷偷报了警向警察求助。警察送了你一副银手镯。*此处妹妹和女友可以替换成任意亲友。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">31</td>
+                    <td class="question">三个电话</td>
+                    <td class="question">【三个电话】你第三次接到了老师的电话，让你不用去学校了。你一边崩溃大哭，一边定下一张火车票。</td>
+                    <td class="answer">你是一名离乡打工人员，把孩子留在了家乡。你的孩子因为优秀的成绩受到了校园霸凌，因为害怕父母担心，她决定隐瞒这件事。为了融入集体她开始不写作业逃课故意答错题，支教老师发现了这个情况，打电话给你，而你没法回老家。即便孩子这么做了，情况并没有改善，还是被同学欺负，愈演愈烈，孩子开始自残希望得到你的关心，老师又打电话给你，你依然没有回家。终于，这一天孩子从教学楼上一跃而下结束了自己的生命，你终于要回家了，见孩子最后一面。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">悬疑,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">32</td>
+                    <td class="question">我要结婚了</td>
+                    <td class="question">【我要结婚了】你的朋友D约你作为伴郎参加他的婚礼，而在婚礼的前几天，你接到一通来电，电话那头说："您好，是永远的十八岁先生吗，我是XX市警察局，请配合调查"你的反应是?</td>
+                    <td class="answer">你和朋友是网友，互相只知道网名。并且你们俩都是宅友魔法师，朋友D所谓的婚礼是和纸片人结婚，现实当中性格内向没有朋友的他向你这个唯一的朋友发起了邀请。而在见面的前几天，debu朋友因为心血管疾病暴毙在家，等到发现的时候已经来不及了，警方调查了他电脑里的记录找到了你。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">33</td>
+                    <td class="question">粉色连衣裙的女人</td>
+                    <td class="question">【粉色连衣裙的女人】你的新邻居是一个独居的年轻男人，有一天你吃完宵夜回家看到一个穿粉色连衣裙浓妆艳抹的长发女人进了邻居家的门。深夜，隔壁传来争吵摔东西的声音，在安静的楼道里格外刺耳。第二天你在邻居家门口的垃圾袋里看到了被剪碎的粉色连衣裙和一把长发，你询问了邻居，他却支支吾吾不肯明说……你要报警吗?</td>
+                    <td class="answer">邻居是一个有异装癖的男人，因此一直独身。邻居的家人不知道这个情况，一直催他结婚，他就从父母的家里搬了出来，这一天邻居女装完回家，被你看到了。没想到邻居的妈妈早就在家里等着他，看到女装的邻居，俩人大吵一架，母亲剪碎了他的粉色裙子和假发，这就是你所看到的事情。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">34</td>
+                    <td class="question">初恋之死</td>
+                    <td class="question">【初恋之死】今天是你初恋出殡的日子，她是远近闻名的美女，看了她一眼之后谁都无法忘却她的美貌，乌木般的秀发，吹弹可破如雪一样的肌肤。她生前也十分爱护自己的美貌，时下最流行的化妆品，最时髦的裙子，她都是第一时间拥有的。这样如同公主一般的她，追求者也像蚂蚁一样多，你就是其中之一，在她生前你从没能正面好好地看她一眼，在这最后一刻，你想好好地最后再看她一眼，将那美貌永远印在心间。往铺着天鹅绒的棺木中一瞧，她还是穿着最爱的那条墨绿色裙子，沿着裙角往上看去，你惊呼一声，捂着嘴巴后退几步，这……老妇人是谁?</td>
+                    <td class="answer">时间是中世纪，地点是欧洲，那时候还没有萃取天然绿色的工艺，绿色的染料包含砷，也就是砒霜的主要成分，长期穿着就会中毒。那时候的美女追求如同死人一样白的肤色，也大量使用包含水银的粉底，长期使用使人皮肤溃烂崩坏，看起来像是老人一样。棺木中的初恋美女，越是走在时尚的前沿越是死地快，在人生最美好的时刻就中毒而死。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">悬疑,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">35</td>
+                    <td class="question">日记</td>
+                    <td class="question">故事【日记】2019年2月，女儿不去上学了，我劝不动她。2019年6月，女儿每天盯着电视和电脑看，我怕她眼睛弄坏了。2019年12月，女儿好像开朗了一些，看到她经常和朋友语音聊天。2020年3月，女儿笑了，说她做了一件大好事，我也很高兴。2020年5月，女儿的状态恶化了，整夜不睡觉，她也不和我说话。2020年6月，总觉得最近家里开销特别大，嗯……?是我糊涂了吗。2020年10月，女儿出门了，最近疫情好些了之后她经常出门，好像朋友也变多了，太好了。2021年2月，我收到了一张律师函，上面写着女儿的名字，怎么会?!2021年8月，我把女儿禁足了</td>
+                    <td class="answer">女儿因为一些原因拒绝去上学，6月程晴令上线，女儿沉迷其中。同年12月，女儿混了肖战的饭圈。这期间，女儿一直在为它做数据女工。20年3月，AO3被举报。5月，肖战遭到大批网友抵制，资本开始审视这个东西是不是值得投资。6月光点上线，女儿偷家里的钱买数字专。疫情好转后，女儿照例出门参加饭圈活动，渐渐开始认清它的真面目。21年2月，肖战状告"黑粉"。8月肖战胜诉，粉丝被罚3W，故事中的这位父/母把女儿彻底禁足了。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">36</td>
+                    <td class="question">仪式</td>
+                    <td class="question">【仪式】最近你的父母总是吵架，你也觉得你的母亲状态有些奇怪，她总是心不在焉，偷偷问你怎么给别人转账……有时候会在家里无声地挥舞双手像在进行什么仪式。一天晚饭过后，你父亲出门去散步了，你母亲也悄悄出了门，已经起了疑心的你跟在她身后……啊，原来如此……</td>
+                    <td class="answer">你母亲跳广场舞，你父亲以为她外面有人了，转账是为了买跳舞用的团队服装，手舞足蹈是为了练习舞蹈。而且为了防止扰民，所有的广场舞阿姨都是戴着耳机无声跳舞的，看起来像是在进行什么神秘仪式似的。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">搞笑</td>
+                </tr>
+                <tr>
+                    <td class="id">37</td>
+                    <td class="question">跟踪狂</td>
+                    <td class="question">【跟踪狂】"那个人又在跟着我了"小明在心里暗暗地想，并且加快了脚步希望甩开跟着自己的那个人。自从这个学期开始，小明每天上学的路上总有一个人跟着自己，有的时候是走路有的时候是骑车，有的时候是开车。每次跟到学校门口，那个人就不再行动了，小明感到很害怕，你能帮帮小明吗?</td>
+                    <td class="answer">小明是你数学课本上的人物，经典应用题，小明从家出发以每小时XX米的速度均速往学校出发。追踪者从B地出发，以每小时XX N米的速度追赶小明……解决的方法很简单，小明只要改一个复杂点的名字就不再会出现在课本上啦。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">搞笑</td>
+                </tr>
+                <tr>
+                    <td class="id">38</td>
+                    <td class="question">一见钟情</td>
+                    <td class="question">【一见钟情】你和你的男友是校友，他比你大三届，马上就要毕业了。你总感觉和他心有灵犀，一见钟情，于是你们约好了等你到了法定结婚年龄马上结婚，快要过国庆了，男友对你说，不如假期你不要回去了，来我家见见我父母吧。你欣然同意。然而，男友的父母一看到你的脸，大惊失色，坚决反对你们结婚交往。这是为什么呢?</td>
+                    <td class="answer">这是刚刚改革开放，计划生育的年代。你是超生的孩子，为了保住工作，生下你之后父母把你送到乡下给远方亲戚抚养，并且改了姓。父母一直对亲戚进行着经济援助，得知你考上了这里的大学父母也很开心，而且也快要退休了。正在考虑是不是要联系到你让你回到这个家庭，谁知道你们亲兄妹竟然相爱了，人间悲剧。</td>
+                    <td class="difficulty">5</td>
+                    <td class="tags">烧脑,悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">39</td>
+                    <td class="question">夜半敲门</td>
+                    <td class="question">夜半敲门问题：一个人住在山顶的小屋里，半夜听见有敲门声音，但是他打开门却没有人，于是去睡了。第二天，有人在山脚下发现死尸一具，警察来把山顶的那人带走了。为什么?</td>
+                    <td class="answer">山顶的小屋的门前是悬崖，悬崖下的人好不容易才爬上来，想要敲门求救。一开门，就又被推了下去。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">经典,悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">40</td>
+                    <td class="question">满地木屑</td>
+                    <td class="question">满地木屑问题：马戏团里有两个侏儒，瞎子侏儒比另一个侏儒矮，马戏团只需要一个侏儒，马戏团里的侏儒当然是越矮越好了。两个侏儒决定比谁的个子矮，个子高的就去自杀。可是，在约定比个子的前一天，瞎子侏儒也就是那个矮的侏儒已经在家里自杀死了。在他的家里只发现木头做的家具和满地的木屑。问他为什么自杀?</td>
+                    <td class="answer">瞎侏儒的拐杖被另一个侏儒弄断了，于是瞎侏儒以为突然长高了。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">经典,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">41</td>
+                    <td class="question">半根火柴</td>
+                    <td class="question">半根火柴问题：有一个人在沙漠中，头朝下死了，不远处散落着几个行李箱子，而这个人手里紧紧地抓着半个火柴，推理这个人是怎么死的?</td>
+                    <td class="answer">这个人和朋友乘热气球飞在空中，热气球故障，丢光行李仍超重一些，于是抓阄，抽到半个火柴的被扔了下去。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">经典,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">42</td>
+                    <td class="question">葬礼上的邂逅</td>
+                    <td class="question">葬礼故事的问题：有母女三人，母亲死了，姐妹俩去参加葬礼，妹妹在葬礼上遇见了一个很帅的男子，并对他一见倾心。但是葬礼后那个男子就不见了，妹妹怎么找也找不到他。后来过了一个月，妹妹把姐姐杀了，为什么?</td>
+                    <td class="answer">为了再举办一次葬礼，从而再次见到那个男子。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">经典,悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">43</td>
+                    <td class="question">水草与头发</td>
+                    <td class="question">水草问题：有个男子跟他女友去河边散步，突然他的女友掉进河里了，那个男子就急忙跳到水里去找，可没找到他的女友，他伤心的离开了这里。过了几年后，他故地重游，这时看到有个老人家在钓鱼，可那老人家钓上来的鱼身上没有水草，他就问那老人家为什么鱼身上没有沾到一点水草，那老人家说："你不知道啊，这河从没有长过水草。"说到这时那男子突然跳到水里，自杀了，为什么?</td>
+                    <td class="answer">男子曾抓到女友头发，却以为是水草松手了，女友几乎等于死在男子手里。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">经典,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">44</td>
+                    <td class="question">眼疾患者的绝望</td>
+                    <td class="question">跳火车问题：一个人坐火车去邻镇看病，看完之后病全好了。回来的路上火车经过一个隧道，这个人就跳车自杀了，为什么?</td>
+                    <td class="answer">他的病是眼疾，完全瞎了，看完病眼睛复明，过隧道时突如其来的黑暗让他以为自己又瞎了，于是内心崩溃自杀了。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">经典,悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">45</td>
+                    <td class="question">女明星的帽子</td>
+                    <td class="question">女明星养了一个女儿，从小她都会时不时给她的女儿戴一顶帽子，有一天她带她女儿去医院，女儿在医院知道真相后就自杀了，为什么?</td>
+                    <td class="answer">女明星毁过容，养女儿是为了得到移植脸皮到她自己的脸上，那顶帽子是她自己的，时不时给女儿戴上是为了测量女儿头部大小，一旦刚好合适，就可以带去医院做脸部移植手术。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">经典,悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">46</td>
+                    <td class="question">旁观者的笑容</td>
+                    <td class="question">最惨绝人寰的事情发生了，但旁观者发现凶手后却笑了，请问发生了什么事?</td>
+                    <td class="answer">旁观者其实是读者，看推理小说时因为自己猜测的作案凶手和最后揭晓的结果一样，所以就满足地笑了。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">烧脑,搞笑</td>
+                </tr>
+                <tr>
+                    <td class="id">47</td>
+                    <td class="question">最后一张签名</td>
+                    <td class="question">一名男子A请另一名男子B签上名字在纸上，随即杀死了B，为什么?</td>
+                    <td class="answer">男子B是名知名歌手，男子A想要他最后一张签名。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">经典</td>
+                </tr>
+                <tr>
+                    <td class="id">48</td>
+                    <td class="question">救生艇上的男子</td>
+                    <td class="question">男子精神正常，但却在船上挥起刀，将许多人的手一一砍断。为什么?</td>
+                    <td class="answer">发生了船难，男子在救生艇上。救生艇已经达到承载人数的上限。许多溺水者仍然不断游过来，想要抓住救生艇。为了避免救生艇翻覆，男子只好将溺水者伸出来的手一一砍断。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">经典,悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">49</td>
+                    <td class="question">葬礼上的男子</td>
+                    <td class="question">有母女三人，母亲死了，姐妹俩去参加葬礼。妹妹在葬礼上遇见了一个很有型的男子，并对他一见倾心。会到家后，妹妹把姐姐杀了。为什么?</td>
+                    <td class="answer">因为家里如果再死一个人，又可以举行一次葬礼，那个男子又会来参加葬礼，妹妹就又可以见到他了。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">经典,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">50</td>
+                    <td class="question">火车隧道自杀</td>
+                    <td class="question">一个人坐火车去临镇看病，看完之后病全好了。回来的路上火车经过一个隧道，这个人就跳车自杀了。为什么?</td>
+                    <td class="answer">因为他看好的是眼睛的病。经过隧道，以为眼睛又看不见了。经受不住打击，自杀了。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">经典,悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">51</td>
+                    <td class="question">神秘的电话</td>
+                    <td class="question">深夜，你接到了一个陌生电话，电话那头传来一个熟悉的声音："我在你身后。"你转身一看，房间里空无一人。第二天，你发现你的邻居死了。为什么?</td>
+                    <td class="answer">你是一个盲人，那个声音是你邻居的。他昨晚在你家做客，临走时说了这句话。第二天他因为心脏病发作死在了自己家里。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">52</td>
+                    <td class="question">消失的脚印</td>
+                    <td class="question">一个人在雪地里行走，走了很长一段路后，突然发现自己的脚印消失了。为什么?</td>
+                    <td class="answer">这个人是在倒着走，所以脚印在前面，而不是在身后。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">搞笑</td>
+                </tr>
+                <tr>
+                    <td class="id">53</td>
+                    <td class="question">奇怪的房间</td>
+                    <td class="question">一个人走进一个房间，房间里有四个人，但只有三个人活着。为什么?</td>
+                    <td class="answer">房间里有四个人：一个活人、一个死人、一个孕妇（肚子里有一个人）。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">54</td>
+                    <td class="question">致命的晚餐</td>
+                    <td class="question">一个人在餐厅点了一份鱼，吃了一口就死了。为什么?</td>
+                    <td class="answer">这个人对鱼过敏，但餐厅的鱼是安全的。问题是他用叉子吃鱼，而叉子之前被用来吃花生酱，他对花生也过敏。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">55</td>
+                    <td class="question">神秘的照片</td>
+                    <td class="question">一个人拍了一张照片，照片上显示他在睡觉，但他确定拍照时自己是醒着的。为什么?</td>
+                    <td class="answer">这个人是在照镜子时拍的，镜子里反射的是他睡觉时的样子。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">搞笑</td>
+                </tr>
+                <tr>
+                    <td class="id">56</td>
+                    <td class="question">消失的汽车</td>
+                    <td class="question">一辆汽车在隧道里消失了，但隧道两端都有监控，没有看到汽车出来。为什么?</td>
+                    <td class="answer">汽车在隧道里发生了事故，被其他车辆撞毁了，残骸被清理走了。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">57</td>
+                    <td class="question">奇怪的医生</td>
+                    <td class="question">一个医生给病人看病，但从来不问病人问题。为什么?</td>
+                    <td class="answer">这个医生是兽医，给动物看病。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">搞笑</td>
+                </tr>
+                <tr>
+                    <td class="id">58</td>
+                    <td class="question">致命的礼物</td>
+                    <td class="question">一个人收到了一份礼物，打开后立刻死了。为什么?</td>
+                    <td class="answer">礼物是一个定时炸弹，打开时正好爆炸了。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">59</td>
+                    <td class="question">消失的船</td>
+                    <td class="question">一艘船在海上消失了，但海面上没有任何残骸。为什么?</td>
+                    <td class="answer">船沉到了海底，被海水完全覆盖了。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">60</td>
+                    <td class="question">奇怪的比赛</td>
+                    <td class="question">两个人比赛，一个人赢了，但两个人都很高兴。为什么?</td>
+                    <td class="answer">这是一场友谊赛，输的人请赢的人吃饭。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">搞笑</td>
+                </tr>
+                <tr>
+                    <td class="id">61</td>
+                    <td class="question">神秘的声音</td>
+                    <td class="question">一个人在房间里听到奇怪的声音，但房间里只有他一个人。为什么?</td>
+                    <td class="answer">声音来自房间里的电器，比如空调、冰箱等。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">62</td>
+                    <td class="question">消失的钱</td>
+                    <td class="question">一个人把钱放在桌子上，转身后钱就不见了。为什么?</td>
+                    <td class="answer">钱被风吹走了，或者被其他人拿走了。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">63</td>
+                    <td class="question">奇怪的梦</td>
+                    <td class="question">一个人做了一个梦，梦见自己死了，醒来后发现自己真的死了。为什么?</td>
+                    <td class="answer">这个人在梦中死了，但实际上是心脏病发作，在梦中就已经死了。</td>
+                    <td class="difficulty">4</td>
+                    <td class="tags">悬疑,烧脑</td>
+                </tr>
+                <tr>
+                    <td class="id">64</td>
+                    <td class="question">神秘的信</td>
+                    <td class="question">一个人收到一封信，看完后立刻自杀了。为什么?</td>
+                    <td class="answer">信里告诉他，他得了绝症，只有几天可活了。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">65</td>
+                    <td class="question">消失的人</td>
+                    <td class="question">一个人在房间里消失了，但房间的门窗都是锁着的。为什么?</td>
+                    <td class="answer">这个人从烟囱爬出去了，或者房间有暗门。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">66</td>
+                    <td class="question">奇怪的镜子</td>
+                    <td class="question">一个人照镜子，但镜子里没有他的影子。为什么?</td>
+                    <td class="answer">这个人是一个吸血鬼，吸血鬼在镜子里没有影子。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">67</td>
+                    <td class="question">致命的电话</td>
+                    <td class="question">一个人接了一个电话，听完后立刻死了。为什么?</td>
+                    <td class="answer">电话里告诉他，他的家人全部遇难了，他承受不住打击心脏病发作而死。</td>
+                    <td class="difficulty">3</td>
+                    <td class="tags">悬疑</td>
+                </tr>
+                <tr>
+                    <td class="id">68</td>
+                    <td class="question">神秘的数字</td>
+                    <td class="question">一个人看到一串数字，看完后立刻疯了。为什么?</td>
+                    <td class="answer">这串数字是他的银行账户余额，显示他破产了。</td>
+                    <td class="difficulty">2</td>
+                    <td class="tags">搞笑</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+</rewritten_file>

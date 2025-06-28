@@ -27,9 +27,9 @@ public class SoupControllerTest {
     @Test
     public void testInsertSoup() throws Exception {
         SoupDTO soupDTO = new SoupDTO();
-        soupDTO.setTitle("深夜的敲门声");
-        soupDTO.setDescription("某人深夜听到敲门声，开门却没人。请推理发生了什么？");
-        soupDTO.setAnswer("有人恶作剧敲门后躲起来了。");
+        soupDTO.setTitle("测试1");
+        soupDTO.setDescription("测试1");
+        soupDTO.setAnswer("测试1");
         soupDTO.setDifficulty(2);
         soupDTO.setTagIds(Arrays.asList(1L, 2L));
         soupDTO.setIsPublic(true);
