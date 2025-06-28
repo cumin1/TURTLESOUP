@@ -7,7 +7,7 @@ import com.turtle.common.utils.RegexUtils;
 import com.turtle.mapper.UserMapper;
 import com.turtle.pojo.dto.UserDTO;
 import com.turtle.pojo.entity.User;
-import com.turtle.pojo.vo.UserLoginVo;
+import com.turtle.pojo.vo.UserLoginVO;
 import com.turtle.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -46,7 +46,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @param userDTO
      * @return
      */
-    public Result<UserLoginVo> login(UserDTO userDTO) {
+    public Result<UserLoginVO> login(UserDTO userDTO) {
         String username = userDTO.getUsername();
         String email = userDTO.getEmail();
         String password = DigestUtils.md5DigestAsHex(userDTO.getPassword().getBytes());
@@ -76,7 +76,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Long userId = user.getId();
         username = user.getUsername();
         String token = JwtUtils.generateToken(userId, username);
-        UserLoginVo loginVo = UserLoginVo.builder().id(userId).username(username).token(token).build();
+        UserLoginVO loginVo = UserLoginVO.builder().id(userId).username(username).token(token).build();
         return Result.success(loginVo);
     }
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.turtle.mapper.SoupMapper">
+
+    <select id="getListByPage" resultType="com.turtle.pojo.vo.SoupPageQueryVO">
+        select DISTINCT
+        s.id as id,
+        s.title as title,
+        s.description as description,
+        s.answer as answer,
+        s.difficulty as difficulty
+        from soup s left join soup_tag st
+        on s.id = st.soup_id
+        <where>
+            <if test="title != null and title != ''">
+                and s.title like concat('%',#{title},'%')
+            </if>
+            <if test="difficulty != null and difficulty != ''">
+                and s.difficulty = #{difficulty}
+            </if>
+            <if test="tagId != null and tagId != ''">
+                and st.tag_id = #{tagId}
+            </if>
+        </where>
+    </select>
+</mapper>

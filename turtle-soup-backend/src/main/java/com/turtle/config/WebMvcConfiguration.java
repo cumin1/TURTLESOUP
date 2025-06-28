@@ -29,6 +29,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .addPathPatterns("/user/**")
                 .addPathPatterns("/soup/**") // 拦截所有soup相关方法
                 .excludePathPatterns("/user/login")
-                .excludePathPatterns("/user/register");
+                .excludePathPatterns("/user/register")
+                .excludePathPatterns("/soup/list"); // 查看题目列表不需要用户权限
     }
 }

@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserLoginVo implements Serializable {
+public class UserLoginVO implements Serializable {
     private Long id;
     private String username;
     private String token; // jwt

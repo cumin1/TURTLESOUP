@@ -2,7 +2,7 @@ package com.turtle.controller;
 
 import com.turtle.common.result.Result;
 import com.turtle.pojo.dto.UserDTO;
-import com.turtle.pojo.vo.UserLoginVo;
+import com.turtle.pojo.vo.UserLoginVO;
 import com.turtle.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,9 +24,9 @@ public class UserController {
 
     @PostMapping("/login")
     @Operation(summary = "用户登录")
-    public Result<UserLoginVo> login(@RequestBody UserDTO userDTO){
+    public Result<UserLoginVO> login(@RequestBody UserDTO userDTO){
         log.info("用户登录: {}",userDTO.toString());
-        Result<UserLoginVo> result = userService.login(userDTO);
+        Result<UserLoginVO> result = userService.login(userDTO);
         return result;
     }
 
