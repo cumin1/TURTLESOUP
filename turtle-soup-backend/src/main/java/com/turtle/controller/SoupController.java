@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/soup")
 @Tag(name = "题目相关接口")
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 public class SoupController {
 
     @Autowired
@@ -29,7 +30,7 @@ public class SoupController {
         return result;
     }
 
-    @GetMapping("/list")
+    @PostMapping("/list")
     @Operation(summary = "查看题目列表")
     public Result<PageResult> getSoupList(@RequestBody SoupPageQueryDTO soupPageQueryDTO) {
         log.info("查看题目列表: {}", soupPageQueryDTO.toString());

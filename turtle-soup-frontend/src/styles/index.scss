@@ -1,0 +1,50 @@
+/* 基础样式 */
+body {
+  background: #F2E9E4;
+  color: #22223B;
+  font-family: system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* 隐藏未编译内容 */
+[v-cloak] {
+  display: none;
+}
+
+/* 交互动画 */
+.hover-scale {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* 应用主容器 */
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+  margin-top: 60px;
+  padding: 20px;
+}
+
+/* 卡片容器 */
+.card-container {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 加载状态 */
+.loading-section {
+  padding: 40px;
+  text-align: center;
+}
