@@ -82,4 +82,30 @@ public class SoupServiceImpl extends ServiceImpl<SoupMapper, Soup> implements So
         pageResult.setRecords(page.getResult());
         return pageResult;
     }
+
+    /**
+     * 根据ID查询题目
+     * @param id
+     * @return
+     */
+    public Result<Soup> getSoupById(Long id) {
+        Soup soup = getById(id);
+        if (soup == null) {
+            return Result.error("题目不存在");
+        }
+        return Result.success(soup);
+    }
+
+    /**
+     * 获取题目详情
+     * @param id
+     * @return
+     */
+    public Result getSoupDetail(Long id) {
+        Soup soup = getById(id);
+        if (soup == null) {
+            return Result.error("题目不存在");
+        }
+        return Result.success(soup);
+    }
 }

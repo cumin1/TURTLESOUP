@@ -13,4 +13,7 @@ public interface SoupService extends IService<Soup> {
 
     // 查找题目列表
     PageResult getSoupListByPage(SoupPageQueryDTO soupPageQueryDTO);
+
+    // 根据ID查询题目
+    Result<Soup> getSoupById(Long id);
 }

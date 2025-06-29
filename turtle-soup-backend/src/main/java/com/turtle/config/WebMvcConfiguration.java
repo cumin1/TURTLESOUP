@@ -30,6 +30,8 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .addPathPatterns("/soup/**") // 拦截所有soup相关方法
                 .excludePathPatterns("/user/login")
                 .excludePathPatterns("/user/register")
-                .excludePathPatterns("/soup/list"); // 查看题目列表不需要用户权限
+                .excludePathPatterns("/soup/list") // 查看题目列表不需要用户权限
+                .excludePathPatterns("/soup/*") // 查看题目详情不需要用户权限
+                .excludePathPatterns("/soup/ask"); // AI问答需要用户权限，但先排除测试
     }
 }
