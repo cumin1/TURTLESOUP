@@ -108,9 +108,11 @@ import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { Turtle, ArrowRight } from '@element-plus/icons-vue'
-import { getSoupList } from '@/api/soupApi'
+import { getSoupList, startGame } from '@/api/soupApi'
+import { useUserStore } from '@/stores/user'
 
 const router = useRouter()
+const userStore = useUserStore()
 
 const soupList = ref([])
 const tags = ref([
@@ -241,8 +243,22 @@ const handleCurrentChange = (page) => {
   loadSoupList()
 }
 
-const handleSoupClick = (soup) => {
-  router.push(`/soup/${soup.id}`)
+const handleSoupClick = async (soup) => {
+  if (!userStore.isAuthenticated) {
+    ElMessage.warning('请先登录')
+    return
+  }
+  try {
+    const res = await startGame(soup.id)
+    console.log('开始游戏接口响应:', res)
+    const sessionId = res.data.id
+    // 跳转前加日志
+    console.log('跳转到详情页，soupId:', soup.id, 'sessionId:', sessionId)
+    router.push({ name: 'SoupDetail', params: { id: soup.id }, query: { sessionId } })
+  } catch (e) {
+    console.error('开始游戏catch:', e)
+    ElMessage.error('开始游戏失败')
+  }
 }
 </script>
 

@@ -76,7 +76,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Long userId = user.getId();
         username = user.getUsername();
         String token = JwtUtils.generateToken(userId, username);
-        UserLoginVO loginVo = UserLoginVO.builder().id(userId).username(username).token(token).build();
+        UserLoginVO loginVo = UserLoginVO.builder()
+                .id(userId)
+                .username(username)
+                .token(token)
+                .avatar(user.getAvatarUrl())
+                .build();
         return Result.success(loginVo);
     }
 }

@@ -7,4 +7,5 @@ public class MessageConstant {
     public static final String LOGIN_ERROR = "请输入正确的用户名和密码!";
     public static final String USER_NOT_FOUND = "用户不存在!";
     public static final String PASSWORD_ERROR = "密码错误!";
+    public static final String SESSION_NOT_FOUND = "该会话不存在!";
 }

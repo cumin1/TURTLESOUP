@@ -28,10 +28,11 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         registry.addInterceptor(jwtTokenUserInterceptor)
                 .addPathPatterns("/user/**")
                 .addPathPatterns("/soup/**") // 拦截所有soup相关方法
+                .addPathPatterns("/game/**")  // game相关的功能需要登录
                 .excludePathPatterns("/user/login")
                 .excludePathPatterns("/user/register")
                 .excludePathPatterns("/soup/list") // 查看题目列表不需要用户权限
-                .excludePathPatterns("/soup/*") // 查看题目详情不需要用户权限
-                .excludePathPatterns("/soup/ask"); // AI问答需要用户权限，但先排除测试
+                .excludePathPatterns("/soup/*"); // 查看题目详情不需要用户权限
+
     }
 }

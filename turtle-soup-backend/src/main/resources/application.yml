@@ -11,6 +11,15 @@ spring:
     hikari:
       connection-timeout: 20000
       maximum-pool-size: 10
+  ai:
+    openai:
+      api-key: ${turtle.apikey}
+      chat:
+        options:
+          model: deepseek-reasoner
+      base-url: https://api.deepseek.com
+      embedding:
+        enabled: false
 
 logging:
   level:
@@ -20,7 +29,7 @@ logging:
         service: info
         controller: info
 
-# springdoc-openapi????
+# springdoc-openapi
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
@@ -31,9 +40,9 @@ springdoc:
   group-configs:
     - group: 'default'
       paths-to-match: '/**'
-      packages-to-scan: com.turtle.controller  #????????controller????
+      packages-to-scan: com.turtle.controller
 
-# knife4j???????????????????????
+# knife4j
 knife4j:
   enable: true
   setting:

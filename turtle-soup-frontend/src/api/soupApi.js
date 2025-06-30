@@ -28,3 +28,30 @@ export const askQuestion = (data) => {
     data
   })
 }
+
+// 开始游戏
+export const startGame = (soupId) => {
+  return request({
+    url: '/game/start',
+    method: 'post',
+    params: { soupId }
+  })
+}
+
+// 停止游戏
+export const stopGame = (sessionId) => {
+  return request({
+    url: '/game/stop',
+    method: 'get',
+    params: { sessionId }
+  })
+}
+
+// 获取游戏状态
+export const getGameStatus = (sessionId) => {
+  return request({
+    url: '/game/status',
+    method: 'get',
+    params: { sessionId }
+  })
+}

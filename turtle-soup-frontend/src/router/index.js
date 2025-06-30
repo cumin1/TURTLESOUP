@@ -28,7 +28,7 @@ const routes = [
   },
   {
     path: '/soup/:id',
-    name: 'soup-detail',
+    name: 'SoupDetail',
     component: () => import('@/views/soup/SoupDetailView.vue'),
     meta: { title: '题目详情' }
   },

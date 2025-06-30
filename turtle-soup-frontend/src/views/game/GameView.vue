@@ -61,7 +61,8 @@
             {{ showAnswer ? '隐藏答案' : '查看答案' }}
           </el-button>
           <el-button @click="resetGame">重新开始</el-button>
-          <el-button @click="$router.push('/soup')">返回列表</el-button>
+          <el-button @click="handleBackToDetail">返回详情页</el-button>
+          <el-button v-if="sessionId && gameStatus === '进行中'" type="danger" @click="handleStopGame">结束游戏</el-button>
         </div>
       </div>
 
@@ -82,6 +83,7 @@ import { ref, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { getSoupDetail, askQuestion } from '@/api/soup'
+import { stopGame, getGameStatus } from '@/api/soupApi'
 
 const route = useRoute()
 const router = useRouter()
@@ -94,6 +96,9 @@ const aiLoading = ref(false)
 const questionCount = ref(0)
 const chatMessages = ref([])
 const chatContainer = ref(null)
+const sessionId = ref(route.params.id || route.query.sessionId)
+const soupId = ref(route.query.soupId)
+const gameStatus = ref('进行中')
 
 const getDifficultyType = (difficulty) => {
   const types = { '简单': 'success', '中等': 'warning', '困难': 'danger' }
@@ -101,8 +106,12 @@ const getDifficultyType = (difficulty) => {
 }
 
 const loadSoupDetail = async () => {
+  if (!soupId.value) {
+    ElMessage.error('无效的题目ID')
+    return
+  }
   try {
-    const response = await getSoupDetail(route.params.id)
+    const response = await getSoupDetail(soupId.value)
     soup.value = response.data
   } catch (error) {
     ElMessage.error('加载失败')
@@ -159,6 +168,31 @@ const resetGame = () => {
   chatMessages.value = []
   questionCount.value = 0
   showAnswer.value = false
+}
+
+const handleBackToDetail = () => {
+  if (soupId.value && sessionId.value) {
+    router.push({ path: `/soup/${soupId.value}`, query: { sessionId: sessionId.value } })
+  } else if (soupId.value) {
+    router.push(`/soup/${soupId.value}`)
+  }
+}
+
+const handleStopGame = async () => {
+  if (!sessionId.value) {
+    ElMessage.warning('无有效游戏会话')
+    return
+  }
+  try {
+    await stopGame(sessionId.value)
+    ElMessage.success('已结束游戏')
+    gameStatus.value = '已结束'
+    if (soupId.value) {
+      router.push({ path: `/soup/${soupId.value}` })
+    }
+  } catch (e) {
+    ElMessage.error('结束游戏失败')
+  }
 }
 
 onMounted(() => {

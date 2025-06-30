@@ -9,7 +9,7 @@
         <h1 class="soup-title">{{ soup.title }}</h1>
         <div class="soup-meta">
           <el-tag :type="getDifficultyType(soup.difficulty)">
-            {{ soup.difficulty }}
+            {{ getDifficultyText(soup.difficulty) }}
           </el-tag>
           <div class="tags">
             <el-tag v-for="tag in soup.tags" :key="tag.id" size="small">
@@ -22,12 +22,13 @@
           <el-button @click="showAnswer = !showAnswer">
             {{ showAnswer ? '隐藏答案' : '查看答案' }}
           </el-button>
+          <el-button v-if="sessionId && gameStatus !== '已结束'" type="danger" @click="handleStopGame">结束游戏</el-button>
         </div>
       </div>
 
       <div class="soup-body card-container">
         <h2>题目描述</h2>
-        <p>{{ soup.question }}</p>
+        <p>{{ soup.description }}</p>
       </div>
 
       <div v-if="showAnswer" class="soup-answer card-container">
@@ -46,7 +47,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { getSoupDetail } from '@/api/soup'
+import { getSoupDetail, startGame as apiStartGame, stopGame, getGameStatus } from '@/api/soupApi'
 import { useUserStore } from '@/stores/user'
 
 const route = useRoute()
@@ -56,10 +57,18 @@ const userStore = useUserStore()
 const soup = ref(null)
 const loading = ref(true)
 const showAnswer = ref(false)
+const sessionId = ref(route.query.sessionId)
+const gameStatus = ref('')
+const statusLoading = ref(false)
 
 const getDifficultyType = (difficulty) => {
-  const types = { '简单': 'success', '中等': 'warning', '困难': 'danger' }
+  const types = { 2: 'success', 3: 'warning', 4: 'warning', 5: 'danger' }
   return types[difficulty] || 'info'
+}
+
+const getDifficultyText = (difficulty) => {
+  const texts = { 2: '简单', 3: '中等', 4: '较难', 5: '困难' }
+  return texts[difficulty] || '未知'
 }
 
 const loadSoupDetail = async () => {
@@ -73,16 +82,55 @@ const loadSoupDetail = async () => {
   }
 }
 
-const startGame = () => {
+const startGame = async () => {
   if (!userStore.isAuthenticated) {
     ElMessage.warning('请先登录')
     return
   }
-  router.push(`/game/${soup.value.id}`)
+  try {
+    const res = await apiStartGame(soup.value.id)
+    sessionId.value = res.data.id
+    await fetchGameStatus()
+    ElMessage.success('游戏已开始')
+    router.push({ path: `/game/${sessionId.value}`, query: { soupId: res.data.soupId } })
+  } catch (e) {
+    ElMessage.error('开始游戏失败')
+  }
+}
+
+const handleStopGame = async () => {
+  if (!sessionId.value) {
+    ElMessage.warning('无有效游戏会话')
+    return
+  }
+  try {
+    await stopGame(sessionId.value)
+    ElMessage.success('已结束游戏')
+    gameStatus.value = '已结束'
+  } catch (e) {
+    ElMessage.error('结束游戏失败')
+  }
+}
+
+const fetchGameStatus = async () => {
+  if (!sessionId.value) {
+    gameStatus.value = null
+    return
+  }
+  statusLoading.value = true
+  try {
+    const res = await getGameStatus(sessionId.value)
+    gameStatus.value = res.data
+  } catch (e) {
+    gameStatus.value = null
+  } finally {
+    statusLoading.value = false
+  }
 }
 
 onMounted(() => {
   loadSoupDetail()
+  fetchGameStatus()
 })
 </script>
 
