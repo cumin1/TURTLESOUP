@@ -13,4 +13,7 @@ public interface UserService extends IService<User> {
 
     // 用户登录
     Result<UserLoginVO> login(UserDTO userDTO);
+
+    // 查看用户信息
+    UserLoginVO info(Long userId);
 }

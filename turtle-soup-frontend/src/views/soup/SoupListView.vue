@@ -1,6 +1,7 @@
 <template>
   <div class="soup-list-container">
-    <div class="page-header">
+    <div class="page-header detective-bg">
+      <img src="/detective.svg" class="detective-icon" alt="detective" />
       <div class="header-content">
         <h1 class="page-title">推理谜题库</h1>
         <p class="page-subtitle">探索海龟汤的神秘世界，挑战你的逻辑思维</p>
@@ -10,41 +11,59 @@
       </div>
     </div>
 
-    <div class="filter-section card-container">
-      <el-row :gutter="20">
-        <el-col :span="6">
-          <!-- 难度等级：2简单，3中等，4较难，5困难 -->
-          <el-select v-model="filters.difficulty" placeholder="难度" clearable>
-            <el-option label="简单" :value="2" />
-            <el-option label="中等" :value="3" />
-            <el-option label="较难" :value="4" />
-            <el-option label="困难" :value="5" />
-          </el-select>
-        </el-col>
-        <el-col :span="6">
-          <el-select v-model="filters.tag" placeholder="标签" clearable>
-            <el-option
-              v-for="tag in tags"
-              :key="tag.id"
-              :label="tag.name"
-              :value="tag.id"
+    <!-- 创意搜索区 -->
+    <!-- 恢复为原始样式，不再单独居中弹出 -->
+    <!-- 创意筛选区 -->
+    <div class="creative-filter">
+      <div class="filter-group">
+        <span class="filter-label">难度：</span>
+        <span
+          v-for="item in difficultyOptions"
+          :key="item.value"
+          :class="['difficulty-chip', {active: filters.difficulty === item.value}]"
+          @click="selectDifficulty(item.value)"
+        >
+          {{ item.label }}
+        </span>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">标签：</span>
+        <span
+          v-for="tag in tags"
+          :key="tag.id"
+          :class="['tag-chip', {active: filters.tag === tag.id}]"
+          @click="selectTag(tag.id)"
+        >
+          {{ tag.name }}
+        </span>
+      </div>
+      <div class="filter-group search-group">
+        <div class="search-anim-wrap">
+          <div class="search-icon" @click="toggleSearch">
+            <img src="/magnifier.svg" alt="search" :class="{active: searchActive}" />
+          </div>
+          <transition name="slide-input">
+            <input
+              v-if="searchActive"
+              v-model="filters.keyword"
+              class="creative-input"
+              placeholder="输入关键词推理吧..."
+              @keyup.enter="handleSearch"
             />
-          </el-select>
-        </el-col>
-        <el-col :span="6">
-          <el-input
-            v-model="filters.keyword"
-            placeholder="搜索题目"
-            clearable
-            prefix-icon="Search"
-          />
-        </el-col>
-        <el-col :span="6">
-          <el-button type="primary" @click="handleSearch" icon="Search">
-            搜索
-          </el-button>
-        </el-col>
-      </el-row>
+          </transition>
+          <transition name="slide-go">
+            <div
+              v-if="searchActive"
+              class="search-go"
+              @click="handleSearch"
+              title="开始侦探"
+            >
+              <img src="/footprint.svg" alt="go" />
+            </div>
+          </transition>
+        </div>
+      </div>
+      <span class="filter-clear" @click="clearFilters">重置</span>
     </div>
 
     <div v-if="loading" class="loading-section">
@@ -134,6 +153,30 @@ const pagination = reactive({
   size: 8,
   total: 0
 })
+
+const searchActive = ref(false)
+const toggleSearch = () => { searchActive.value = !searchActive.value }
+
+const difficultyOptions = [
+  { label: '简单', value: 2 },
+  { label: '中等', value: 3 },
+  { label: '较难', value: 4 },
+  { label: '困难', value: 5 }
+]
+const selectDifficulty = (val) => {
+  filters.difficulty = filters.difficulty === val ? null : val
+  handleSearch()
+}
+const selectTag = (id) => {
+  filters.tag = filters.tag === id ? null : id
+  handleSearch()
+}
+const clearFilters = () => {
+  filters.difficulty = null
+  filters.tag = null
+  filters.keyword = ''
+  handleSearch()
+}
 
 const getDifficultyType = (difficulty) => {
   const types = {
@@ -264,9 +307,15 @@ const handleSoupClick = async (soup) => {
 
 <style scoped>
 .soup-list-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px;
+  background: linear-gradient(135deg, #f7f8fa 0%, #e0eafc 100%);
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+.page-header.detective-bg {
+  background: linear-gradient(135deg, #2d3e50 0%, #4f8cff 100%);
+  color: #fff;
+  border-bottom: 3px solid #ffd700;
 }
 
 .page-header {
@@ -300,11 +349,12 @@ const handleSoupClick = async (soup) => {
 }
 
 .page-title {
-  font-size: 48px;
+  font-size: 44px;
   font-weight: bold;
-  margin-bottom: 10px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  color: #fff;
   letter-spacing: 2px;
+  text-shadow: 2px 2px 8px #2d3e50, 0 0 2px #ffd700;
+  -webkit-text-stroke: 1px #2d3e50;
 }
 
 .page-subtitle {
@@ -466,6 +516,175 @@ const handleSoupClick = async (soup) => {
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
+.creative-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 18px;
+  background: #fffbe6;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(44,62,80,0.08);
+  padding: 12px 18px;
+}
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.filter-label {
+  font-weight: bold;
+  color: #2d3e50;
+  margin-right: 4px;
+}
+.difficulty-chip, .tag-chip {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 16px;
+  background: #e0eafc;
+  color: #2d3e50;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-right: 4px;
+  user-select: none;
+  box-shadow: 0 1px 4px rgba(44,62,80,0.04);
+}
+.difficulty-chip.active {
+  background: linear-gradient(90deg, #ffd700 60%, #ffe066 100%);
+  color: #2d3e50;
+  font-weight: bold;
+  box-shadow: 0 2px 8px #ffd70033;
+}
+.tag-chip.active {
+  background: linear-gradient(90deg, #4f8cff 60%, #6ed0ff 100%);
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 2px 8px #4f8cff33;
+}
+.filter-clear {
+  margin-left: 12px;
+  color: #ff6f61;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  border-bottom: 1px dashed #ff6f61;
+  transition: color 0.2s;
+}
+.filter-clear:hover {
+  color: #d7263d;
+}
+@media (max-width: 600px) {
+  .creative-filter {
+    flex-direction: column;
+    gap: 10px;
+    padding: 8px 6px;
+  }
+  .difficulty-chip, .tag-chip {
+    font-size: 13px;
+    padding: 5px 10px;
+  }
+}
+
+.search-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.search-anim-wrap {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.search-icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  background: rgba(230, 236, 255, 0.7);
+  box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: margin-right 0.4s cubic-bezier(.4,2,.6,1), transform 0.4s cubic-bezier(.4,2,.6,1);
+  margin-right: 0;
+}
+.search-icon img {
+  width: 60%;
+  height: 60%;
+  transition: transform 0.3s, filter 0.3s;
+}
+.search-icon img.active {
+  transform: rotate(-20deg) scale(1.1);
+  filter: drop-shadow(0 0 8px #ffd700);
+}
+.search-anim-wrap {
+  min-width: 40px;
+}
+.search-anim-wrap .search-icon {
+  z-index: 2;
+}
+.slide-input-enter-active, .slide-input-leave-active {
+  transition: width 0.4s cubic-bezier(.4,2,.6,1), opacity 0.35s cubic-bezier(.4,2,.6,1), margin-left 0.4s cubic-bezier(.4,2,.6,1);
+}
+.slide-input-enter-from, .slide-input-leave-to {
+  width: 0;
+  opacity: 0;
+  margin-left: 0;
+}
+.slide-input-enter-to, .slide-input-leave-from {
+  width: 180px;
+  opacity: 1;
+  margin-left: 12px;
+}
+.creative-input {
+  width: 180px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 24px;
+  background: #fff;
+  font-size: 16px;
+  color: #2d3e50;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.06);
+  outline: none;
+  margin-left: 12px;
+  transition: box-shadow 0.2s;
+}
+.slide-go-enter-active, .slide-go-leave-active {
+  transition: opacity 0.35s cubic-bezier(.4,2,.6,1), transform 0.4s cubic-bezier(.4,2,.6,1);
+}
+.slide-go-enter-from, .slide-go-leave-to {
+  opacity: 0;
+  transform: translateX(-24px) scale(0.8);
+}
+.slide-go-enter-to, .slide-go-leave-from {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+.search-go {
+  margin-left: 4px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  transition: filter 0.2s;
+}
+.search-go img {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 6px #ffd700);
+}
+.search-anim-wrap .search-icon {
+  transition: margin-right 0.4s cubic-bezier(.4,2,.6,1), transform 0.4s cubic-bezier(.4,2,.6,1);
+}
+.search-anim-wrap .search-icon:has(+ .v-enter-active),
+.search-anim-wrap .search-icon:has(+ .creative-input) {
+  margin-right: 12px;
+  transform: translateX(-8px);
+}
 @media (max-width: 768px) {
   .page-header {
     flex-direction: column;
@@ -501,6 +720,18 @@ const handleSoupClick = async (soup) => {
   
   .filter-section {
     padding: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .page-header.detective-bg {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px !important;
+  }
+  .creative-input { width: 110px; font-size: 15px; }
+  .slide-input-enter-to, .slide-input-leave-from {
+    width: 110px;
   }
 }
 </style>

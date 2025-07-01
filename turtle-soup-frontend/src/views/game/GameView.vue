@@ -5,14 +5,21 @@
     </div>
     
     <div v-else-if="soup" class="game-content">
-      <div class="game-header card-container">
-        <h1 class="game-title">{{ soup.title }}</h1>
-        <div class="game-meta">
-          <el-tag :type="getDifficultyType(soup.difficulty)">
-            {{ soup.difficulty }}
-          </el-tag>
-          <span class="question-count">已提问: {{ questionCount }} 次</span>
+      <div class="game-header card-container detective-bg">
+        <img src="/detective.svg" class="detective-icon" alt="detective" />
+        <div>
+          <h1 class="game-title">{{ soup.title }}</h1>
+          <div class="game-meta">
+            <el-tag :type="getDifficultyType(soup.difficulty)">
+              {{ getDifficultyText(soup.difficulty) }}
+            </el-tag>
+            <span class="question-count">已提问: {{ questionCount }} 次</span>
+          </div>
         </div>
+      </div>
+      <div class="game-background card-container">
+        <h2>题目背景</h2>
+        <p class="background-text">{{ soup.description }}</p>
       </div>
 
       <div class="game-body card-container">
@@ -83,7 +90,7 @@
 import { ref, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { getSoupDetail } from '@/api/soup'
+import { getSoupDetail } from '@/api/soupApi'
 import { askAi, winGame, stopGame, getGameStatus } from '@/api/soupApi'
 
 const route = useRoute()
@@ -105,6 +112,11 @@ const isGameCompleted = ref(false)
 const getDifficultyType = (difficulty) => {
   const types = { '简单': 'success', '中等': 'warning', '困难': 'danger' }
   return types[difficulty] || 'info'
+}
+
+const getDifficultyText = (difficulty) => {
+  const texts = { '简单': 'Easy', '中等': 'Medium', '困难': 'Hard' }
+  return texts[difficulty] || 'Unknown'
 }
 
 const loadSoupDetail = async () => {
@@ -235,6 +247,13 @@ onMounted(() => {
   padding: 30px;
 }
 
+.game-header.detective-bg {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+  border-bottom: 2px solid #ffd700;
+}
+
 .game-title {
   font-size: 28px;
   margin-bottom: 20px;
@@ -348,5 +367,29 @@ onMounted(() => {
 .error {
   padding: 40px;
   text-align: center;
+}
+
+.detective-icon {
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+}
+
+.background-text {
+  font-size: 16px;
+  color: #2d3e50;
+  font-family: 'Comic Sans MS', 'PingFang SC', 'Arial', sans-serif;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .game-header.detective-bg {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px !important;
+  }
+  .background-text {
+    font-size: 14px;
+  }
 }
 </style> 

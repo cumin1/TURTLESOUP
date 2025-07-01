@@ -5,29 +5,32 @@
     </div>
     
     <div v-else-if="soup" class="soup-content">
-      <div class="soup-header card-container">
-        <h1 class="soup-title">{{ soup.title }}</h1>
-        <div class="soup-meta">
-          <el-tag :type="getDifficultyType(soup.difficulty)">
-            {{ getDifficultyText(soup.difficulty) }}
-          </el-tag>
-          <div class="tags">
-            <el-tag v-for="tag in soup.tags" :key="tag.id" size="small">
-              {{ tag.name }}
+      <div class="soup-header card-container detective-bg">
+        <img src="/detective.svg" class="detective-icon" alt="detective" />
+        <div>
+          <h1 class="soup-title">{{ soup.title }}</h1>
+          <div class="soup-meta">
+            <el-tag :type="getDifficultyType(soup.difficulty)">
+              {{ getDifficultyText(soup.difficulty) }}
             </el-tag>
+            <div class="tags">
+              <el-tag v-for="tag in soup.tags" :key="tag.id" size="small">
+                {{ tag.name }}
+              </el-tag>
+            </div>
           </div>
-        </div>
-        <div class="actions">
-          <el-button type="primary" @click="startGame">开始游戏</el-button>
-          <el-button @click="showAnswer = !showAnswer">
-            {{ showAnswer ? '隐藏答案' : '查看答案' }}
-          </el-button>
-          <el-button v-if="sessionId && gameStatus !== '已结束'" type="danger" @click="handleStopGame">结束游戏</el-button>
+          <div class="actions">
+            <el-button type="primary" @click="startGame">开始游戏</el-button>
+            <el-button @click="showAnswer = !showAnswer">
+              {{ showAnswer ? '隐藏答案' : '查看答案' }}
+            </el-button>
+            <el-button v-if="sessionId && gameStatus !== '已结束'" type="danger" @click="handleStopGame">结束游戏</el-button>
+          </div>
         </div>
       </div>
 
       <div class="soup-body card-container">
-        <h2>题目描述</h2>
+        <h2>题目背景</h2>
         <p>{{ soup.description }}</p>
       </div>
 
@@ -187,5 +190,26 @@ onMounted(() => {
 .error {
   padding: 40px;
   text-align: center;
+}
+
+.soup-header.detective-bg {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+  border-bottom: 2px solid #ffd700;
+}
+
+.detective-icon {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+}
+
+@media (max-width: 600px) {
+  .soup-header.detective-bg {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px !important;
+  }
 }
 </style> 

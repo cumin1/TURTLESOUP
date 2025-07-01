@@ -1,7 +1,9 @@
 package com.turtle.controller;
 
+import com.turtle.common.context.BaseContext;
 import com.turtle.common.result.Result;
 import com.turtle.pojo.dto.UserDTO;
+import com.turtle.pojo.entity.User;
 import com.turtle.pojo.vo.UserLoginVO;
 import com.turtle.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,5 +36,14 @@ public class UserController {
         log.info("用户注册: {}",userDTO.toString());
         Result result = userService.register(userDTO);
         return result;
+    }
+
+    @GetMapping("/info")
+    @Operation(summary = "查看用户信息")
+    public Result info(){
+        log.info("查看用户信息");
+        Long userId = BaseContext.getCurrentId();
+        UserLoginVO user = userService.info(userId);
+        return Result.success(user);
     }
 }

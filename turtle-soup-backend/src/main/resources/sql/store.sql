@@ -69,44 +69,4 @@ CREATE TABLE soup_comment (
 
 ALTER TABLE user CHANGE COLUMN password_hash password VARCHAR(255) NOT NULL;
 
--- 1. 用户
-INSERT INTO user (username, password_hash, email, avatar_url, created_at, last_login) VALUES
-                                                                                          ('alice', 'hash1', 'alice@example.com', NULL, NOW(), NOW()),
-                                                                                          ('bob', 'hash2', 'bob@example.com', NULL, NOW(), NOW());
-
--- 2. 标签
-INSERT INTO tag (name) VALUES
-                           ('经典'), ('悬疑'), ('搞笑'), ('烧脑');
-
--- 3. 题库
-INSERT INTO soup (title, description, answer, difficulty, creator_id, created_at, updated_at, is_public) VALUES
-                                                                                                             ('电梯里的女人', '一个女人每天都要乘电梯上下班，但只有下班时才会直接到达家门口。为什么？', '女人是个侏儒，只有下班时有高个邻居帮她按高楼层按钮。', 3, 1, NOW(), NOW(), TRUE),
-                                                                                                             ('红色的雨伞', '一个人打着红色雨伞走进咖啡馆，出来时却消失了。为什么？', '他其实是双胞胎兄弟，换人了。', 2, 2, NOW(), NOW(), TRUE);
-
--- 4. 题目-标签关联
-INSERT INTO soup_tag (soup_id, tag_id) VALUES
-                                           (1, 1), (1, 4), (2, 2), (2, 3);
-
--- 5. 游戏记录
-INSERT INTO game_session (user_id, soup_id, start_time, end_time, status, used_hint_cnt) VALUES
-                                                                                             (1, 1, NOW(), NULL, '进行中', 0),
-                                                                                             (2, 2, NOW(), NOW(), '通关', 1);
-
--- 6. 提问记录
-INSERT INTO question_log (game_session_id, question, ai_answer, created_at) VALUES
-                                                                                (1, '她每天都住在同一层吗？', '是', NOW()),
-                                                                                (1, '她有残疾吗？', '是', NOW()),
-                                                                                (2, '雨伞是关键吗？', '不是', NOW()),
-                                                                                (2, '有两个人吗？', '是', NOW());
-
--- 7. 收藏
-INSERT INTO favorite (user_id, soup_id, created_at) VALUES
-                                                        (1, 2, NOW()),
-                                                        (2, 1, NOW());
-
--- 8. 评论
-INSERT INTO soup_comment (soup_id, user_id, content, created_at) VALUES
-                                                                     (1, 2, '这个题目很有趣！', NOW()),
-                                                                     (2, 1, '我差点没猜出来！', NOW());
-
 ALTER TABLE question_log MODIFY COLUMN ai_answer TEXT;

@@ -1,6 +1,7 @@
 package com.turtle.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.turtle.common.exception.UserException;
 import com.turtle.common.result.Result;
 import com.turtle.common.utils.JwtUtils;
 import com.turtle.common.utils.RegexUtils;
@@ -9,6 +10,7 @@ import com.turtle.pojo.dto.UserDTO;
 import com.turtle.pojo.entity.User;
 import com.turtle.pojo.vo.UserLoginVO;
 import com.turtle.service.UserService;
+import jdk.jshell.spi.ExecutionControl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -83,5 +85,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .avatar(user.getAvatarUrl())
                 .build();
         return Result.success(loginVo);
+    }
+
+
+    /**
+     * 查看用户信息
+     * @param userId
+     * @return
+     */
+    public UserLoginVO info(Long userId) {
+        User user = getById(userId);
+        if (user == null){
+            throw new UserException(USER_NOT_FOUND);
+        }
+        UserLoginVO userLoginVO = new UserLoginVO();
+        BeanUtils.copyProperties(user,userLoginVO);
+        return userLoginVO;
     }
 }

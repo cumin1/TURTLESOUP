@@ -49,10 +49,13 @@ export const useUserStore = defineStore('user', {
     async getUserInfo() {
       try {
         const response = await getUserInfo()
-        // 如果没有头像，设置默认头像
+        // 兼容后端返回的 avatar 字段
+        const { id, username, avatar, avatarUrl, email } = response.data
         this.userInfo = {
-          ...response.data,
-          avatar: response.data.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${response.data.username}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`
+          id,
+          username,
+          avatar: avatar || avatarUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`,
+          email: email || null
         }
         return response
       } catch (error) {
@@ -99,14 +102,10 @@ export const useUserStore = defineStore('user', {
         try {
           await this.getUserInfo()
         } catch (error) {
-          // 如果获取用户信息失败，设置默认头像
-          this.userInfo = {
-            id: 'default',
-            username: '用户',
-            avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=user&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf',
-            email: null
-          }
+          this.resetUserState()
         }
+      } else {
+        this.resetUserState()
       }
     }
   }

@@ -45,7 +45,7 @@
         
         <!-- 用户区域 -->
         <div class="nav-user">
-          <template v-if="userStore.isAuthenticated">
+          <template v-if="userStore.isAuthenticated && userStore.userInfo && userStore.userInfo.username">
             <el-dropdown @command="handleUserCommand" trigger="click">
               <div class="user-avatar">
                 <div class="avatar-container">
@@ -118,7 +118,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { 
@@ -136,6 +136,10 @@ import { useUserStore } from '@/stores/user'
 const route = useRoute()
 const router = useRouter()
 const userStore = useUserStore()
+
+onMounted(() => {
+  userStore.initUserState()
+})
 
 // 处理用户下拉菜单命令
 const handleUserCommand = async (command) => {
