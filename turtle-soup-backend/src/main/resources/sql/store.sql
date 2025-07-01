@@ -109,3 +109,4 @@ INSERT INTO soup_comment (soup_id, user_id, content, created_at) VALUES
                                                                      (1, 2, '这个题目很有趣！', NOW()),
                                                                      (2, 1, '我差点没猜出来！', NOW());
 
+ALTER TABLE question_log MODIFY COLUMN ai_answer TEXT;

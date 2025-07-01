@@ -43,13 +43,13 @@
               v-model="currentQuestion"
               placeholder="输入你的问题..."
               @keyup.enter="sendQuestion"
-              :disabled="aiLoading"
+              :disabled="aiLoading || isGameCompleted"
             />
             <el-button
               type="primary"
               @click="sendQuestion"
               :loading="aiLoading"
-              :disabled="!currentQuestion.trim()"
+              :disabled="!currentQuestion.trim() || isGameCompleted"
             >
               发送
             </el-button>
@@ -62,7 +62,8 @@
           </el-button>
           <el-button @click="resetGame">重新开始</el-button>
           <el-button @click="handleBackToDetail">返回详情页</el-button>
-          <el-button v-if="sessionId && gameStatus === '进行中'" type="danger" @click="handleStopGame">结束游戏</el-button>
+          <el-button v-if="sessionId && gameStatus === '进行中' && !isGameCompleted" type="danger" @click="handleStopGame">结束游戏</el-button>
+          <el-button v-if="isGameCompleted" type="success" disabled>游戏已通关</el-button>
         </div>
       </div>
 
@@ -82,8 +83,8 @@
 import { ref, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { getSoupDetail, askQuestion } from '@/api/soup'
-import { stopGame, getGameStatus } from '@/api/soupApi'
+import { getSoupDetail } from '@/api/soup'
+import { askAi, winGame, stopGame, getGameStatus } from '@/api/soupApi'
 
 const route = useRoute()
 const router = useRouter()
@@ -99,6 +100,7 @@ const chatContainer = ref(null)
 const sessionId = ref(route.params.id || route.query.sessionId)
 const soupId = ref(route.query.soupId)
 const gameStatus = ref('进行中')
+const isGameCompleted = ref(false)
 
 const getDifficultyType = (difficulty) => {
   const types = { '简单': 'success', '中等': 'warning', '困难': 'danger' }
@@ -138,17 +140,33 @@ const sendQuestion = async () => {
   aiLoading.value = true
 
   try {
-    const response = await askQuestion({
-      soupId: soup.value.id,
-      question
+    const response = await askAi({
+      sessionId: sessionId.value,
+      question: question
     })
+    
+    const aiResponse = response.data
     
     // 添加AI回答
     chatMessages.value.push({
       type: 'ai',
-      content: response.data,
+      content: aiResponse,
       time: new Date().toLocaleTimeString()
     })
+    
+    // 判断是否成功
+    if (aiResponse.startsWith('SUCCESS:')) {
+      // 调用通关接口
+      await winGame(sessionId.value)
+      ElMessage.success('恭喜你推理成功！游戏通关！')
+      // 设置游戏完成状态
+      isGameCompleted.value = true
+      gameStatus.value = '已通关'
+      // 禁用输入框
+      aiLoading.value = false
+      return
+    }
+    
   } catch (error) {
     ElMessage.error('AI回答失败')
   } finally {

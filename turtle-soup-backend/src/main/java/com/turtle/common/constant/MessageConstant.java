@@ -8,4 +8,5 @@ public class MessageConstant {
     public static final String USER_NOT_FOUND = "用户不存在!";
     public static final String PASSWORD_ERROR = "密码错误!";
     public static final String SESSION_NOT_FOUND = "该会话不存在!";
+    public static final String SOUP_NOT_FOUND = "题目信息不存在!";
 }

@@ -55,3 +55,21 @@ export const getGameStatus = (sessionId) => {
     params: { sessionId }
   })
 }
+
+// AI问答接口
+export const askAi = (data) => {
+  return request({
+    url: '/game/ask',
+    method: 'post',
+    data
+  })
+}
+
+// 通关游戏接口
+export const winGame = (sessionId) => {
+  return request({
+    url: '/game/success',
+    method: 'get',
+    params: { sessionId }
+  })
+}

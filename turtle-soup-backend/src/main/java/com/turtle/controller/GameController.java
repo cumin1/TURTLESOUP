@@ -2,6 +2,7 @@ package com.turtle.controller;
 
 import com.turtle.common.context.BaseContext;
 import com.turtle.common.result.Result;
+import com.turtle.pojo.dto.QuestionDTO;
 import com.turtle.pojo.entity.GameSession;
 import com.turtle.service.GameService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,6 +43,19 @@ public class GameController {
         return Result.success();
     }
 
+
+    /**
+     * 用户通关了游戏
+     * @return
+     */
+    @GetMapping("/success")
+    @Operation(summary = "通关游戏")
+    public Result winGame(@RequestParam Long sessionId) {
+        log.info("用户: {},通关了游戏: {}", BaseContext.getCurrentId(), sessionId);
+        gameService.winGame(sessionId);
+        return Result.success();
+    }
+
     @GetMapping("/status")
     @Operation(summary = "查看该用户游戏状态")
     public Result getGameStatus(@RequestParam Long sessionId) {
@@ -54,7 +68,10 @@ public class GameController {
      * AI 问答接口
      */
     @PostMapping("/ask")
-    public String askAi(@RequestParam Long gameSessionId, @RequestBody String question) {
-        return gameService.askAi(gameSessionId, question);
+    @Operation(summary = "AI问答接口")
+    public Result askAi(@RequestBody QuestionDTO question) {
+        log.info("用户提问: {}",question.toString());
+        String resp = gameService.askAi(question);
+        return Result.success(resp);
     }
 } 
