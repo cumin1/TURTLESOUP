@@ -1,5 +1,6 @@
 <template>
   <div class="home-container">
+    <canvas class="bubble-bg"></canvas>
     <div class="hero-section">
       <div class="hero-content">
         <div class="hero-icon">
@@ -56,6 +57,7 @@ import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { Turtle, ChatDotRound, Collection, User } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
+import { onMounted, onBeforeUnmount } from 'vue'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -65,6 +67,85 @@ const handleGuestLogin = () => {
   ElMessage.success('游客登录成功！')
   router.push('/soup')
 }
+
+// 动态气泡和可爱表情特效
+const emojis = ['🐢', '🐰', '🐱', '🐟', '🐧', '🦄', '🌈', '⭐', '🍉', '🍓', '🍩', '🍬']
+let animationId = null
+let bubbles = []
+let canvas, ctx
+
+function randomEmoji() {
+  return emojis[Math.floor(Math.random() * emojis.length)]
+}
+
+function createBubble(width, height) {
+  return {
+    x: Math.random() * width,
+    y: height + 30 + Math.random() * 100,
+    r: 18 + Math.random() * 22,
+    speed: 0.5 + Math.random() * 1.2,
+    drift: (Math.random() - 0.5) * 0.6,
+    opacity: 0.5 + Math.random() * 0.5,
+    emoji: Math.random() < 0.5 ? randomEmoji() : null
+  }
+}
+
+function drawBubbles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  for (const b of bubbles) {
+    ctx.save()
+    ctx.globalAlpha = b.opacity
+    if (b.emoji) {
+      ctx.font = `${b.r * 1.2}px serif`
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.fillText(b.emoji, b.x, b.y)
+    } else {
+      ctx.beginPath()
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2)
+      ctx.fillStyle = 'rgba(255,255,255,0.18)'
+      ctx.shadowColor = '#fff'
+      ctx.shadowBlur = 8
+      ctx.fill()
+    }
+    ctx.restore()
+  }
+}
+
+function animate() {
+  for (const b of bubbles) {
+    b.y -= b.speed
+    b.x += b.drift
+    if (b.y < -40) {
+      // 重生
+      Object.assign(b, createBubble(canvas.width, canvas.height))
+      b.y = canvas.height + 30
+    }
+  }
+  drawBubbles()
+  animationId = requestAnimationFrame(animate)
+}
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+}
+
+onMounted(() => {
+  canvas = document.querySelector('.bubble-bg')
+  if (!canvas) return
+  ctx = canvas.getContext('2d')
+  resizeCanvas()
+  // 生成气泡
+  bubbles = Array.from({ length: 22 }, () => createBubble(canvas.width, canvas.height))
+  animate()
+  window.addEventListener('resize', resizeCanvas)
+})
+
+onBeforeUnmount(() => {
+  cancelAnimationFrame(animationId)
+  window.removeEventListener('resize', resizeCanvas)
+})
 </script>
 
 <style scoped>
@@ -73,6 +154,16 @@ const handleGuestLogin = () => {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   position: relative;
   overflow: hidden;
+}
+
+.bubble-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .home-container::before {
