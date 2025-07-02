@@ -11,6 +11,12 @@ spring:
     hikari:
       connection-timeout: 20000
       maximum-pool-size: 10
+  data:
+    redis:
+      host: ${turtle.redis.host}
+      port: ${turtle.redis.port}
+      password: ${turtle.redis.password}
+      database: ${turtle.redis.database}
   ai:
     openai:
       api-key: ${turtle.apikey}

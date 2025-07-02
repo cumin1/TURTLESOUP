@@ -70,7 +70,6 @@ public class SoupServiceImpl extends ServiceImpl<SoupMapper, Soup> implements So
         Page<SoupPageQueryVO> page = soupMapper.getListByPage(spqDTO);
         for (SoupPageQueryVO soupPageQueryVO : page) {
             Long soupId = soupPageQueryVO.getId();
-            // todo: 后期可能变为在redis中查询 每次查询题目列表时都要查询所有题目的tag 数据库压力大
             List<SoupTag> soupTagList = soupTagMapper.selectListById(soupId);
             List<Long> tagIds = new ArrayList<>();
             for (SoupTag soupTag : soupTagList) {

@@ -135,10 +135,14 @@ const userStore = useUserStore()
 
 const soupList = ref([])
 const tags = ref([
-  { id: 1, name: '经典' },
-  { id: 2, name: '悬疑' },
-  { id: 3, name: '搞笑' },
-  { id: 4, name: '烧脑' }
+  { id: 5, name: '动物主题' },
+  { id: 6, name: '奇幻冒险' },
+  { id: 2, name: '恶搞趣味' },
+  { id: 4, name: '悬疑烧脑' },
+  { id: 7, name: '日常生活' },
+  { id: 3, name: '温馨治愈' },
+  { id: 1, name: '经典推理' },
+  { id: 8, name: '黑暗系' }
 ])
 const loading = ref(false)
 
@@ -158,10 +162,10 @@ const searchActive = ref(false)
 const toggleSearch = () => { searchActive.value = !searchActive.value }
 
 const difficultyOptions = [
-  { label: '简单', value: 2 },
-  { label: '中等', value: 3 },
-  { label: '较难', value: 4 },
-  { label: '困难', value: 5 }
+  { label: '简单', value: 1 },
+  { label: '中等', value: 2 },
+  { label: '较难', value: 3 },
+  { label: '困难', value: 4 }
 ]
 const selectDifficulty = (val) => {
   filters.difficulty = filters.difficulty === val ? null : val
@@ -180,20 +184,20 @@ const clearFilters = () => {
 
 const getDifficultyType = (difficulty) => {
   const types = {
-    2: 'success',  // 简单
-    3: 'warning',  // 中等
-    4: 'warning',  // 较难
-    5: 'danger'    // 困难
+    1: 'success',  // 简单
+    2: 'warning',  // 中等
+    3: 'info',     // 较难
+    4: 'danger'    // 困难
   }
   return types[difficulty] || 'info'
 }
 
 const getDifficultyText = (difficulty) => {
   const texts = {
-    2: '简单',
-    3: '中等',
-    4: '较难',
-    5: '困难'
+    1: '简单',
+    2: '中等',
+    3: '较难',
+    4: '困难'
   }
   return texts[difficulty] || '未知'
 }

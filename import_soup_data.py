@@ -20,14 +20,6 @@ class SoupDataImporter:
         self.token = None
         self.session = requests.Session()
         
-        # 标签映射表
-        self.tag_mapping = {
-            "经典": 1,
-            "悬疑": 2,
-            "烧脑": 3,
-            "搞笑": 4
-        }
-        
     def login(self):
         """登录获取JWT token"""
         try:
@@ -78,13 +70,13 @@ class SoupDataImporter:
             for row in rows:
                 cells = row.find_all('td')
                 if len(cells) >= 6:
-                    # 解析标签
+                    # 解析标签，直接读取数字id
                     tag_text = cells[5].text.strip()
                     tag_ids = []
                     for tag in tag_text.split(','):
                         tag = tag.strip()
-                        if tag in self.tag_mapping:
-                            tag_ids.append(self.tag_mapping[tag])
+                        if tag.isdigit():
+                            tag_ids.append(int(tag))
                     
                     puzzle = {
                         'id': int(cells[0].text.strip()),

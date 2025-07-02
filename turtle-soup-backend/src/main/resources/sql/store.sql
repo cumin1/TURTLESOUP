@@ -70,3 +70,13 @@ CREATE TABLE soup_comment (
 ALTER TABLE user CHANGE COLUMN password_hash password VARCHAR(255) NOT NULL;
 
 ALTER TABLE question_log MODIFY COLUMN ai_answer TEXT;
+
+INSERT INTO tag (name) VALUES
+                           ('经典推理'),
+                           ('恶搞趣味'),
+                           ('温馨治愈'),
+                           ('悬疑烧脑'),
+                           ('动物主题'),
+                           ('奇幻冒险'),
+                           ('日常生活'),
+                           ('黑暗系');
