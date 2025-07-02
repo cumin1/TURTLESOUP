@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.turtle.mapper.GameSessionMapper">
-    <!-- 可在此添加自定义SQL语句 -->
-</mapper> 
+    <select id="selectGamesList" resultType="com.turtle.pojo.vo.GamePageQueryVO">
+        SELECT
+        gs.id AS sessionId,
+        gs.soup_id AS soupId,
+        s.title AS title,
+        s.description AS description,
+        s.difficulty AS difficulty,
+        gs.start_time AS startTime,
+        gs.end_time AS endTime,
+        gs.status AS status
+        FROM
+        game_session gs
+        LEFT JOIN soup s ON gs.soup_id = s.id
+        WHERE
+        gs.user_id = #{userId}
+        <if test="userGamesPageDTO.status != null and userGamesPageDTO.status != ''">
+            AND gs.status = #{userGamesPageDTO.status}
+        </if>
+        ORDER BY
+        gs.start_time DESC
+    </select>
+</mapper>

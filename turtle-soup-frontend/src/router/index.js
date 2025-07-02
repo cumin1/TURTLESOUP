@@ -51,6 +51,12 @@ const routes = [
     meta: { title: '关于' }
   },
   {
+    path: '/user/games',
+    name: 'user-games',
+    component: () => import('@/views/user/UserGamesView.vue'),
+    meta: { title: '历史游戏', requiresAuth: true }
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: () => import('@/views/NotFoundView.vue'),

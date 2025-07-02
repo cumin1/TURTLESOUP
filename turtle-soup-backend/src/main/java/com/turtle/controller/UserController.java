@@ -1,8 +1,10 @@
 package com.turtle.controller;
 
 import com.turtle.common.context.BaseContext;
+import com.turtle.common.result.PageResult;
 import com.turtle.common.result.Result;
 import com.turtle.pojo.dto.UserDTO;
+import com.turtle.pojo.dto.UserGamesPageDTO;
 import com.turtle.pojo.entity.User;
 import com.turtle.pojo.vo.UserLoginVO;
 import com.turtle.service.UserService;
@@ -45,5 +47,13 @@ public class UserController {
         Long userId = BaseContext.getCurrentId();
         UserLoginVO user = userService.info(userId);
         return Result.success(user);
+    }
+
+    @PostMapping("/games")
+    @Operation(summary = "查看用户游玩过的游戏")
+    public Result<PageResult> games(@RequestBody UserGamesPageDTO userGamesPageDTO){
+        log.info("查看用户游玩过的游戏");
+        PageResult pageResult = userService.games(userGamesPageDTO);
+        return Result.success(pageResult);
     }
 }

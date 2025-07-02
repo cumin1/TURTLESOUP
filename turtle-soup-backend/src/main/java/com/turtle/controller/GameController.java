@@ -43,7 +43,6 @@ public class GameController {
         return Result.success();
     }
 
-
     /**
      * 用户通关了游戏
      * @return

@@ -32,6 +32,15 @@
             <el-icon><Collection /></el-icon>
             <span>谜题库</span>
           </router-link>
+
+          <router-link 
+            to="/user/games" 
+            class="nav-item"
+            :class="{ active: $route.path === '/user/games' }"
+          >
+            <el-icon><User /></el-icon>
+            <span>历史游戏</span>
+          </router-link>
           
           <router-link 
             to="/about" 
@@ -41,6 +50,8 @@
             <el-icon><InfoFilled /></el-icon>
             <span>关于</span>
           </router-link>
+          
+          
         </div>
         
         <!-- 用户区域 -->
@@ -56,7 +67,7 @@
                 </div>
                 <div class="user-info">
                   <span class="username">{{ userStore.userInfo?.username }}</span>
-                  <span class="user-role">{{ userStore.isGuest ? '游客' : '用户' }}</span>
+                  <span class="user-role">用户</span>
                 </div>
                 <el-icon class="dropdown-icon"><ArrowDown /></el-icon>
               </div>

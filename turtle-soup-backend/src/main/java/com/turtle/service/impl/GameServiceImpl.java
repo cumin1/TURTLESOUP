@@ -1,6 +1,7 @@
 package com.turtle.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.turtle.common.exception.GameSessionException;
 import com.turtle.common.utils.PromptUtils;
 import com.turtle.mapper.GameSessionMapper;
 import com.turtle.mapper.QuestionLogMapper;
@@ -10,6 +11,7 @@ import com.turtle.pojo.entity.GameSession;
 import com.turtle.pojo.entity.Soup;
 import com.turtle.pojo.entity.QuestionLog;
 import com.turtle.service.GameService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.*;
@@ -27,10 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.turtle.common.constant.MessageConstant.SESSION_NOT_FOUND;
-import static com.turtle.common.constant.MessageConstant.SOUP_NOT_FOUND;
+import static com.turtle.common.constant.MessageConstant.*;
 import static com.turtle.common.constant.StatusConstant.*;
 
+@Slf4j
 @Service
 public class GameServiceImpl extends ServiceImpl<GameSessionMapper, GameSession>  implements GameService {
 
@@ -53,6 +55,15 @@ public class GameServiceImpl extends ServiceImpl<GameSessionMapper, GameSession>
      * @return
      */
     public GameSession startGame(Long userId, Long soupId) {
+        // 判断用户是否达到最大同时进行游戏的数量
+        Long count = query().eq("user_id", userId)
+                .eq("status", BEGINNING)
+                .count();
+
+        if (count >= 3){
+            throw new GameSessionException(TOO_MANY_GAME);
+        }
+
         // 查询是否已有进行中的会话
         GameSession existSession = lambdaQuery()
             .eq(GameSession::getUserId, userId)
@@ -183,6 +194,8 @@ public class GameServiceImpl extends ServiceImpl<GameSessionMapper, GameSession>
         
         // 7. 保存对话历史
         saveQuestionLog(sessionId, userQuestion, aiResponse);
+
+        log.info(aiResponse);
         
         return aiResponse;
     }

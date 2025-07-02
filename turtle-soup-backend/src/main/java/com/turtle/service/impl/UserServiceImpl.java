@@ -1,26 +1,40 @@
 package com.turtle.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.turtle.common.context.BaseContext;
 import com.turtle.common.exception.UserException;
+import com.turtle.common.result.PageResult;
 import com.turtle.common.result.Result;
 import com.turtle.common.utils.JwtUtils;
 import com.turtle.common.utils.RegexUtils;
+import com.turtle.mapper.GameSessionMapper;
 import com.turtle.mapper.UserMapper;
 import com.turtle.pojo.dto.UserDTO;
+import com.turtle.pojo.dto.UserGamesPageDTO;
+import com.turtle.pojo.entity.GameSession;
 import com.turtle.pojo.entity.User;
+import com.turtle.pojo.vo.GamePageQueryVO;
 import com.turtle.pojo.vo.UserLoginVO;
 import com.turtle.service.UserService;
 import jdk.jshell.spi.ExecutionControl;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.turtle.common.constant.MessageConstant.*;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+
+    @Autowired
+    private GameSessionMapper gameSessionMapper;
+
     /**
      * 用户注册
      * @param userDTO
@@ -101,5 +115,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         UserLoginVO userLoginVO = new UserLoginVO();
         BeanUtils.copyProperties(user,userLoginVO);
         return userLoginVO;
+    }
+
+
+    /**
+     * 查看用户游玩过的游戏
+     * @param userGamesPageDTO
+     * @return
+     */
+    public PageResult games(UserGamesPageDTO userGamesPageDTO) {
+        PageHelper.startPage(userGamesPageDTO.getPage(),userGamesPageDTO.getPageSize());
+        Page<GamePageQueryVO> games = gameSessionMapper.selectGamesList(BaseContext.getCurrentId(),userGamesPageDTO);
+        PageResult pageResult = new PageResult();
+        pageResult.setTotal(games.getTotal());
+        pageResult.setRecords(games.getResult());
+        return pageResult;
     }
 }

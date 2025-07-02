@@ -5,13 +5,12 @@ import Cookies from 'js-cookie'
 export const useUserStore = defineStore('user', {
   state: () => ({
     token: Cookies.get('token') || '',
-    userInfo: null,
-    isGuest: false
+    userInfo: null
   }),
 
   getters: {
     isLoggedIn: (state) => !!state.token,
-    isAuthenticated: (state) => !!state.token || state.isGuest
+    isAuthenticated: (state) => !!state.token
   },
 
   actions: {
@@ -27,7 +26,6 @@ export const useUserStore = defineStore('user', {
           username,
           avatar: avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`
         }
-        this.isGuest = false
         Cookies.set('token', token, { expires: 7 })
         return response
       } catch (error) {
@@ -74,23 +72,10 @@ export const useUserStore = defineStore('user', {
       }
     },
 
-    // 游客登录
-    guestLogin() {
-      this.isGuest = true
-      this.token = ''
-      this.userInfo = {
-        id: 'guest',
-        username: '游客',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=guest&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf',
-        email: null
-      }
-    },
-
     // 重置用户状态
     resetUserState() {
       this.token = ''
       this.userInfo = null
-      this.isGuest = false
       Cookies.remove('token')
     },
 

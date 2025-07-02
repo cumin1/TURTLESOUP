@@ -1,10 +1,15 @@
 package com.turtle.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.pagehelper.Page;
+import com.turtle.pojo.dto.UserGamesPageDTO;
 import com.turtle.pojo.entity.GameSession;
+import com.turtle.pojo.vo.GamePageQueryVO;
 import org.apache.ibatis.annotations.Mapper;
- 
+
+import java.util.List;
+
 @Mapper
 public interface GameSessionMapper extends BaseMapper<GameSession> {
-    // 可根据需要添加自定义方法
+    Page<GamePageQueryVO> selectGamesList(Long userId,UserGamesPageDTO userGamesPageDTO);
 } 

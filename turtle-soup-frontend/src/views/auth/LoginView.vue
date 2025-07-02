@@ -44,17 +44,6 @@
               {{ loading ? '登录中...' : '登录' }}
             </el-button>
           </el-form-item>
-
-          <el-form-item>
-            <el-button
-              type="success"
-              size="large"
-              class="guest-button custom-button"
-              @click="handleGuestLogin"
-            >
-              游客登录
-            </el-button>
-          </el-form-item>
         </el-form>
 
         <div class="login-footer">
@@ -112,12 +101,6 @@ const handleLogin = async () => {
     loading.value = false
   }
 }
-
-const handleGuestLogin = () => {
-  userStore.guestLogin()
-  ElMessage.success('游客登录成功！')
-  router.push('/')
-}
 </script>
 
 <style scoped>
@@ -157,12 +140,6 @@ const handleGuestLogin = () => {
 }
 
 .login-button {
-  width: 100%;
-  height: 48px;
-  font-size: 16px;
-}
-
-.guest-button {
   width: 100%;
   height: 48px;
   font-size: 16px;

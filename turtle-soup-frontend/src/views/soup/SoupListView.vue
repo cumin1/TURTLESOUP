@@ -96,7 +96,7 @@
           </el-tag>
         </div>
         <div class="soup-footer">
-          <el-button type="primary" size="small" class="play-btn">
+          <el-button type="primary" size="small" class="play-btn" @click.stop="goToDetail(soup)">
             开始推理
             <el-icon class="el-icon--right"><ArrowRight /></el-icon>
           </el-button>
@@ -303,9 +303,16 @@ const handleSoupClick = async (soup) => {
     console.log('跳转到详情页，soupId:', soup.id, 'sessionId:', sessionId)
     router.push({ name: 'SoupDetail', params: { id: soup.id }, query: { sessionId } })
   } catch (e) {
-    console.error('开始游戏catch:', e)
-    ElMessage.error('开始游戏失败')
+    if (e.message && e.message.includes('最多只能同时进行3个游戏')) {
+      ElMessage.error('您最多只能同时进行3个游戏，请先结束一个正在进行的游戏后再开始新游戏。')
+    } else {
+      ElMessage.error('开始游戏失败')
+    }
   }
+}
+
+const goToDetail = (soup) => {
+  router.push(`/soup/${soup.id}`)
 }
 </script>
 

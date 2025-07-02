@@ -16,9 +16,6 @@
           <el-button type="primary" size="large" @click="$router.push('/soup')" class="start-btn">
             开始推理
           </el-button>
-          <el-button size="large" @click="handleGuestLogin" class="guest-btn">
-            游客体验
-          </el-button>
         </div>
       </div>
     </div>
@@ -246,22 +243,6 @@ onBeforeUnmount(() => {
 .start-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255,107,107,0.6);
-}
-
-.guest-btn {
-  background: rgba(255,255,255,0.2);
-  border: 2px solid rgba(255,255,255,0.3);
-  color: #fff;
-  padding: 15px 30px;
-  font-size: 18px;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-}
-
-.guest-btn:hover {
-  background: rgba(255,255,255,0.3);
-  border-color: rgba(255,255,255,0.5);
-  transform: translateY(-2px);
 }
 
 .features-section {
