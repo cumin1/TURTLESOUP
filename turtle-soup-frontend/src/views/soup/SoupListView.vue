@@ -290,25 +290,12 @@ const handleCurrentChange = (page) => {
   loadSoupList()
 }
 
-const handleSoupClick = async (soup) => {
+const handleSoupClick = (soup) => {
   if (!userStore.isAuthenticated) {
     ElMessage.warning('请先登录')
     return
   }
-  try {
-    const res = await startGame(soup.id)
-    console.log('开始游戏接口响应:', res)
-    const sessionId = res.data.id
-    // 跳转前加日志
-    console.log('跳转到详情页，soupId:', soup.id, 'sessionId:', sessionId)
-    router.push({ name: 'SoupDetail', params: { id: soup.id }, query: { sessionId } })
-  } catch (e) {
-    if (e.message && e.message.includes('最多只能同时进行3个游戏')) {
-      ElMessage.error('您最多只能同时进行3个游戏，请先结束一个正在进行的游戏后再开始新游戏。')
-    } else {
-      ElMessage.error('开始游戏失败')
-    }
-  }
+  router.push(`/soup/${soup.id}`)
 }
 
 const goToDetail = (soup) => {

@@ -1,6 +1,7 @@
 package com.turtle.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.turtle.common.exception.BaseException;
 import com.turtle.common.exception.GameSessionException;
 import com.turtle.common.utils.PromptUtils;
 import com.turtle.mapper.GameSessionMapper;
@@ -13,6 +14,7 @@ import com.turtle.pojo.entity.QuestionLog;
 import com.turtle.service.GameService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.*;
 import java.util.HashMap;
@@ -174,7 +176,13 @@ public class GameServiceImpl extends ServiceImpl<GameSessionMapper, GameSession>
         headers.setBearerAuth(apiKey);
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
-        ResponseEntity<Map> response = restTemplate.postForEntity(apiUrl, entity, Map.class);
+        ResponseEntity<Map> response = null;
+        try {
+            response = restTemplate.postForEntity(apiUrl, entity, Map.class);
+        } catch (RestClientException e) {
+            log.error("调用DeepSeek失败", e);
+            throw new BaseException("AI服务异常，请稍后再试");
+        }
 
         // 解析响应
         String aiResponse = parseAIResponse(response.getBody());

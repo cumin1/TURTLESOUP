@@ -93,6 +93,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { getSoupDetail } from '@/api/soupApi'
 import { askAi, winGame, stopGame, getGameStatus } from '@/api/soupApi'
+import request from '@/api/index'
 
 const route = useRoute()
 const router = useRouter()
@@ -227,7 +228,25 @@ const handleStopGame = async () => {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
+  if (sessionId.value) {
+    // 加载历史对话
+    try {
+      const res = await request({
+        url: `/game/sessionDetail/${sessionId.value}`,
+        method: 'get'
+      })
+      if (Array.isArray(res.data)) {
+        chatMessages.value = res.data.map(item => ({
+          type: item.type === 'AI' ? 'ai' : 'user',
+          content: item.question || item.aiAnswer,
+          time: item.createdAt ? new Date(item.createdAt).toLocaleTimeString() : ''
+        })).sort((a, b) => new Date(a.time) - new Date(b.time))
+      }
+    } catch (e) {
+      // 忽略加载历史对话失败
+    }
+  }
   loadSoupDetail()
 })
 </script>

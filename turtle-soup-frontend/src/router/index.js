@@ -39,6 +39,12 @@ const routes = [
     meta: { title: '游戏', requiresAuth: true }
   },
   {
+    path: '/game/history/:sessionId',
+    name: 'game-history',
+    component: () => import('@/views/game/GameHistoryView.vue'),
+    meta: { title: '历史对话' }
+  },
+  {
     path: '/profile',
     name: 'profile',
     component: () => import('@/views/user/ProfileView.vue'),

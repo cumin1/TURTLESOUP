@@ -31,12 +31,17 @@
             {{ formatTime(scope.row.endTime) }}
           </template>
         </el-table-column>
-        <el-table-column label="操作" min-width="100">
+        <el-table-column label="操作" min-width="200">
           <template #default="scope">
+            <el-button v-if="scope.row.status === '进行中'" size="small" type="primary" @click="handleContinueGame(scope.row)">
+              继续游戏
+            </el-button>
             <el-button v-if="scope.row.status === '进行中'" size="small" type="danger" @click="handleStopGame(scope.row)">
               结束游戏
             </el-button>
-            <span v-else>--</span>
+            <el-button v-if="scope.row.status !== '进行中'" size="small" type="info" @click="handleViewHistory(scope.row)">
+              查看对话
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -56,7 +61,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { stopGame } from '@/api/soupApi'
@@ -108,12 +113,27 @@ const handleStopGame = async (row) => {
   }
 }
 
+const handleContinueGame = (row) => {
+  router.push({
+    path: `/game/${row.sessionId}`,
+    query: { soupId: row.soupId }
+  })
+}
+
+const handleViewHistory = (row) => {
+  router.push({ path: `/game/history/${row.sessionId}` })
+}
+
 const formatTime = (t) => {
   if (!t) return '--'
   return new Date(t).toLocaleString()
 }
 
 onMounted(() => {
+  fetchGameList()
+})
+
+watch(() => gameFilter.status, () => {
   fetchGameList()
 })
 </script>

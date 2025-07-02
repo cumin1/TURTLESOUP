@@ -20,11 +20,12 @@
             </div>
           </div>
           <div class="actions">
-            <el-button type="primary" @click="startGame">开始游戏</el-button>
+            <el-button v-if="sessionId && gameStatus === '进行中'" type="primary" @click="continueGame">继续游戏</el-button>
+            <el-button v-if="sessionId && gameStatus === '进行中'" type="danger" @click="handleStopGame">结束游戏</el-button>
+            <el-button v-else type="primary" @click="startGame">开始游戏</el-button>
             <el-button @click="showAnswer = !showAnswer">
               {{ showAnswer ? '隐藏答案' : '查看答案' }}
             </el-button>
-            <el-button v-if="sessionId && gameStatus !== '已结束'" type="danger" @click="handleStopGame">结束游戏</el-button>
           </div>
         </div>
       </div>
@@ -129,6 +130,14 @@ const fetchGameStatus = async () => {
   } finally {
     statusLoading.value = false
   }
+}
+
+const continueGame = () => {
+  if (!sessionId.value) {
+    ElMessage.warning('无进行中的游戏')
+    return
+  }
+  router.push({ path: `/game/${sessionId.value}`, query: { soupId: soup.value.id } })
 }
 
 onMounted(() => {
