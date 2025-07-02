@@ -7,7 +7,6 @@
         s.id as id,
         s.title as title,
         s.description as description,
-        s.answer as answer,
         s.difficulty as difficulty
         from soup s left join soup_tag st
         on s.id = st.soup_id

@@ -1,123 +1,131 @@
 <template>
   <div class="soup-list-container">
-    <div class="page-header detective-bg">
-      <img src="/detective.svg" class="detective-icon" alt="detective" />
-      <div class="header-content">
-        <h1 class="page-title">推理谜题库</h1>
-        <p class="page-subtitle">探索海龟汤的神秘世界，挑战你的逻辑思维</p>
-      </div>
-      <div class="header-decoration">
-        <el-icon class="decoration-icon"><Turtle /></el-icon>
-      </div>
-    </div>
-
-    <!-- 创意搜索区 -->
-    <!-- 恢复为原始样式，不再单独居中弹出 -->
-    <!-- 创意筛选区 -->
-    <div class="creative-filter">
-      <div class="filter-group">
-        <span class="filter-label">难度：</span>
-        <span
-          v-for="item in difficultyOptions"
-          :key="item.value"
-          :class="['difficulty-chip', {active: filters.difficulty === item.value}]"
-          @click="selectDifficulty(item.value)"
-        >
-          {{ item.label }}
-        </span>
-      </div>
-      <div class="filter-group">
-        <span class="filter-label">标签：</span>
-        <span
-          v-for="tag in tags"
-          :key="tag.id"
-          :class="['tag-chip', {active: filters.tag === tag.id}]"
-          @click="selectTag(tag.id)"
-        >
-          {{ tag.name }}
-        </span>
-      </div>
-      <div class="filter-group search-group">
-        <div class="search-anim-wrap">
-          <div class="search-icon" @click="toggleSearch">
-            <img src="/magnifier.svg" alt="search" :class="{active: searchActive}" />
+    <div class="floating-filter-bar">
+      <div class="filter-title">筛选</div>
+      <div class="filter-group vertical">
+        <div class="filter-label">难度</div>
+        <div class="card-selector vertical">
+          <div
+            v-for="item in difficultyOptions"
+            :key="item.value"
+            :class="['selector-card', {active: filters.difficulty === item.value}]"
+            :style="{background: item.gradient}"
+            @click="selectDifficulty(item.value)"
+          >
+            <span class="selector-icon">{{ item.icon }}</span>
+            <span class="selector-label">{{ item.label }}</span>
           </div>
-          <transition name="slide-input">
-            <input
-              v-if="searchActive"
-              v-model="filters.keyword"
-              class="creative-input"
-              placeholder="输入关键词推理吧..."
-              @keyup.enter="handleSearch"
-            />
-          </transition>
-          <transition name="slide-go">
-            <div
-              v-if="searchActive"
-              class="search-go"
-              @click="handleSearch"
-              title="开始侦探"
-            >
-              <img src="/footprint.svg" alt="go" />
-            </div>
-          </transition>
+        </div>
+      </div>
+      <div class="filter-group vertical">
+        <div class="filter-label">标签</div>
+        <div class="card-selector vertical tag-scroll">
+          <div
+            v-for="tag in tags"
+            :key="tag.id"
+            :class="['selector-card', {active: selectedTags.includes(tag.id)}]"
+            :style="{background: tag.gradient}"
+            @click="selectTag(tag.id)"
+          >
+            <span class="selector-icon">{{ tag.icon }}</span>
+            <span class="selector-label">{{ tag.name }}</span>
+            <span v-if="selectedTags.includes(tag.id)" class="checkmark">✔</span>
+          </div>
         </div>
       </div>
       <span class="filter-clear" @click="clearFilters">重置</span>
     </div>
-
-    <div v-if="loading" class="loading-section">
-      <el-skeleton :rows="5" animated />
-    </div>
-
-    <div v-else class="soup-grid">
-      <div
-        v-for="(soup, index) in soupList"
-        :key="soup.id"
-        class="soup-card card-container"
-        @click="handleSoupClick(soup)"
-        :style="{ animationDelay: `${index * 0.1}s` }"
-      >
-        <div class="soup-header">
-          <h3 class="soup-title">{{ soup.title }}</h3>
-          <el-tag :type="getDifficultyType(soup.difficulty)" size="small" class="difficulty-tag">
-            {{ getDifficultyText(soup.difficulty) }}
-          </el-tag>
+    <div class="floating-search-bar">
+      <div class="search-anim-wrap">
+        <div class="search-icon" @click="toggleSearch">
+          <img src="/magnifier.svg" alt="search" :class="{active: searchActive}" />
         </div>
-        <p class="soup-question">{{ soup.description || soup.question }}</p>
-        <div class="soup-tags">
-          <el-tag
-            v-for="tagId in soup.tagIds"
-            :key="tagId"
-            size="small"
-            class="tag-item"
+        <transition name="slide-input">
+          <input
+            v-if="searchActive"
+            v-model="filters.keyword"
+            class="creative-input floating-input"
+            placeholder="输入关键词推理吧..."
+            @keyup.enter="handleSearch"
+          />
+        </transition>
+        <transition name="slide-go">
+          <div
+            v-if="searchActive"
+            class="search-go"
+            @click="handleSearch"
+            title="开始侦探"
           >
-            {{ getTagName(tagId) }}
-          </el-tag>
-        </div>
-        <div class="soup-footer">
-          <el-button type="primary" size="small" class="play-btn" @click.stop="goToDetail(soup)">
-            开始推理
-            <el-icon class="el-icon--right"><ArrowRight /></el-icon>
-          </el-button>
-        </div>
+            <img src="/footprint.svg" alt="go" />
+          </div>
+        </transition>
       </div>
     </div>
+    <div class="main-content">
+      <div class="page-header detective-bg">
+        <img src="/detective.svg" class="detective-icon" alt="detective" />
+        <div class="header-content">
+          <h1 class="page-title">推理谜题库</h1>
+          <p class="page-subtitle">探索海龟汤的神秘世界，挑战你的逻辑思维</p>
+        </div>
+        <div class="header-decoration">
+          <el-icon class="decoration-icon"><Turtle /></el-icon>
+        </div>
+      </div>
 
-    <div v-if="!loading && soupList.length === 0" class="empty-section">
-      <el-empty description="暂无符合条件的题目" />
-    </div>
+      <div v-if="loading" class="loading-section">
+        <el-skeleton :rows="5" animated />
+      </div>
 
-    <div class="pagination-section">
-      <el-pagination
-        v-model:current-page="pagination.page"
-        v-model:page-size="pagination.size"
-        :total="pagination.total"
-        :page-sizes="[8, 12, 16]"
-        layout="total, sizes, prev, pager, next, jumper"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
+      <div v-else class="soup-grid">
+        <div
+          v-for="(soup, index) in soupList"
+          :key="soup.id"
+          class="soup-card card-container"
+          @click="handleSoupClick(soup)"
+          :style="{ animationDelay: `${index * 0.1}s` }"
+        >
+          <div class="soup-header">
+            <h3 class="soup-title">{{ soup.title }}</h3>
+            <el-tag :type="getDifficultyType(soup.difficulty)" size="small" class="difficulty-tag">
+              {{ getDifficultyText(soup.difficulty) }}
+            </el-tag>
+          </div>
+          <p class="soup-question">{{ soup.description || soup.question }}</p>
+          <div class="soup-tags">
+            <el-tag
+              v-for="tagId in soup.tagIds"
+              :key="tagId"
+              size="small"
+              class="tag-item"
+            >
+              {{ getTagName(tagId) }}
+            </el-tag>
+          </div>
+          <div class="soup-footer">
+            <el-button type="primary" size="small" class="play-btn" @click.stop="goToDetail(soup)">
+              开始推理
+              <el-icon class="el-icon--right"><ArrowRight /></el-icon>
+            </el-button>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="!loading && soupList.length === 0" class="empty-section">
+        <el-empty description="暂无符合条件的题目" />
+      </div>
+
+      <div class="pagination-section">
+        <el-pagination
+          v-model:current-page="pagination.page"
+          v-model:page-size="pagination.size"
+          :total="pagination.total"
+          :page-sizes="[8, 12, 16]"
+          layout="total, sizes, prev, pager, next, jumper"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -162,23 +170,31 @@ const searchActive = ref(false)
 const toggleSearch = () => { searchActive.value = !searchActive.value }
 
 const difficultyOptions = [
-  { label: '简单', value: 1 },
-  { label: '中等', value: 2 },
-  { label: '较难', value: 3 },
-  { label: '困难', value: 4 }
+  { label: '简单', value: 1, icon: '🌱', gradient: 'linear-gradient(90deg,#a8ff78,#78ffd6)' },
+  { label: '中等', value: 2, icon: '🌿', gradient: 'linear-gradient(90deg,#43cea2,#185a9d)' },
+  { label: '较难', value: 3, icon: '🍂', gradient: 'linear-gradient(90deg,#f7971e,#ffd200)' },
+  { label: '困难', value: 4, icon: '🌑', gradient: 'linear-gradient(90deg,#232526,#414345)' }
 ]
 const selectDifficulty = (val) => {
   filters.difficulty = filters.difficulty === val ? null : val
   handleSearch()
 }
+const selectedTags = ref([])
 const selectTag = (id) => {
-  filters.tag = filters.tag === id ? null : id
+  const idx = selectedTags.value.indexOf(id)
+  if (idx === -1) {
+    selectedTags.value.push(id)
+  } else {
+    selectedTags.value.splice(idx, 1)
+  }
+  filters.tag = selectedTags.value.length ? [...selectedTags.value] : null
   handleSearch()
 }
 const clearFilters = () => {
   filters.difficulty = null
   filters.tag = null
   filters.keyword = ''
+  selectedTags.value = []
   handleSearch()
 }
 
@@ -276,6 +292,12 @@ const loadSoupList = async () => {
 
 const handleSearch = () => {
   pagination.page = 1
+  // 只传第一个选中的tagId，兼容后端单选
+  if (Array.isArray(selectedTags.value) && selectedTags.value.length > 0) {
+    filters.tag = selectedTags.value[0]
+  } else {
+    filters.tag = null
+  }
   loadSoupList()
 }
 
@@ -301,13 +323,314 @@ const handleSoupClick = (soup) => {
 const goToDetail = (soup) => {
   router.push(`/soup/${soup.id}`)
 }
+
+tags.value = tags.value.map((tag, idx) => ({
+  ...tag,
+  icon: ['🐾','🦄','😂','🕵️','🌞','💖','🧩','🌑'][idx],
+  gradient: [
+    'linear-gradient(90deg,#f7971e,#ffd200)',
+    'linear-gradient(90deg,#43cea2,#185a9d)',
+    'linear-gradient(90deg,#f7971e,#ffd200)',
+    'linear-gradient(90deg,#4f8cff,#6ed0ff)',
+    'linear-gradient(90deg,#a8ff78,#78ffd6)',
+    'linear-gradient(90deg,#ffecd2,#fcb69f)',
+    'linear-gradient(90deg,#667eea,#764ba2)',
+    'linear-gradient(90deg,#232526,#414345)'
+  ][idx]
+}))
 </script>
 
 <style scoped>
 .soup-list-container {
+  display: flex;
+  flex-direction: row;
   background: linear-gradient(135deg, #f7f8fa 0%, #e0eafc 100%);
   min-height: 100vh;
   padding-bottom: 40px;
+}
+
+.floating-filter-bar {
+  position: fixed;
+  top: 90px;
+  left: 24px;
+  width: 140px;
+  z-index: 20;
+  background: linear-gradient(135deg,rgba(255,255,255,0.85) 60%,rgba(200,220,255,0.7) 100%);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(44,62,80,0.18), 0 0 16px 2px #4f8cff44;
+  padding: 14px 7px 14px 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  animation: fadeInLeft 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+  backdrop-filter: blur(8px);
+  border: 2.5px solid #e0eafc;
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.floating-filter-bar .filter-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #4f8cff;
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px #e0eafc;
+}
+
+.filter-group.vertical {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  margin-bottom: 4px;
+}
+
+.card-selector.vertical {
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.card-selector.vertical.tag-scroll {
+  max-height: 180px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #e0eafc #fff;
+  padding-right: 2px;
+}
+.card-selector.vertical.tag-scroll::-webkit-scrollbar {
+  width: 6px;
+  background: #fff;
+}
+.card-selector.vertical.tag-scroll::-webkit-scrollbar-thumb {
+  background: #e0eafc;
+  border-radius: 6px;
+}
+.selector-card {
+  width: 92%;
+  min-width: 0;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px #4f8cff18, 0 1px 2px #ffd70018;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: box-shadow 0.15s, transform 0.15s, border 0.15s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 5px 5px 8px;
+  font-size: 13px;
+  user-select: none;
+  opacity: 0.93;
+  min-height: 28px;
+  height: 28px;
+}
+.selector-card .selector-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 13px;
+  margin-right: 3px;
+}
+.selector-card .selector-label {
+  font-size: 12px;
+  font-weight: bold;
+  color: #2d3e50;
+  letter-spacing: 0.3px;
+}
+.selector-card.active, .selector-card:hover {
+  border: 2px solid #ffd700;
+  box-shadow: 0 2px 8px #ffd70033, 0 1px 2px #23252622;
+  transform: scale(1.03) translateX(1px);
+  opacity: 1;
+  z-index: 2;
+  background: linear-gradient(90deg,#fffbe6 60%,#ffe066 100%);
+}
+.selector-card.active .selector-label, .selector-card:hover .selector-label {
+  color: #232526;
+}
+.selector-card .checkmark {
+  margin-left: auto;
+  color: #ffd700;
+  font-size: 13px;
+  font-weight: bold;
+  background: #fffbe6;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 2px #ffd70033;
+}
+
+.filter-clear {
+  margin-top: 10px;
+  color: #ff6f61;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  border-bottom: 1px dashed #ff6f61;
+  transition: color 0.2s, box-shadow 0.2s;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.7);
+  box-shadow: 0 1px 4px #ff6f6133;
+}
+
+.filter-clear:hover {
+  color: #d7263d;
+  background: #fff0f0;
+  box-shadow: 0 2px 8px #ff6f6133;
+}
+
+.floating-search-bar {
+  position: fixed;
+  top: 90px;
+  right: 32px;
+  z-index: 20;
+  background: rgba(255,255,255,0.98);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(44,62,80,0.10);
+  padding: 18px 18px 18px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeInRight 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+.search-anim-wrap {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.search-icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  background: rgba(230, 236, 255, 0.7);
+  box-shadow: 0 2px 8px rgba(44,62,80,0.04);
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: margin-right 0.4s cubic-bezier(.4,2,.6,1), transform 0.4s cubic-bezier(.4,2,.6,1);
+  margin-right: 0;
+}
+
+.search-icon img {
+  width: 60%;
+  height: 60%;
+  transition: transform 0.3s, filter 0.3s;
+}
+
+.search-icon img.active {
+  transform: rotate(-20deg) scale(1.1);
+  filter: drop-shadow(0 0 8px #ffd700);
+}
+
+.search-anim-wrap {
+  min-width: 40px;
+}
+
+.search-anim-wrap .search-icon {
+  z-index: 2;
+}
+
+.slide-input-enter-active, .slide-input-leave-active {
+  transition: width 0.4s cubic-bezier(.4,2,.6,1), opacity 0.35s cubic-bezier(.4,2,.6,1), margin-left 0.4s cubic-bezier(.4,2,.6,1);
+}
+
+.slide-input-enter-from, .slide-input-leave-to {
+  width: 0;
+  opacity: 0;
+  margin-left: 0;
+}
+
+.slide-input-enter-to, .slide-input-leave-from {
+  width: 180px;
+  opacity: 1;
+  margin-left: 12px;
+}
+
+.creative-input {
+  width: 180px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 24px;
+  background: #fff;
+  font-size: 16px;
+  color: #2d3e50;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.06);
+  outline: none;
+  margin-left: 12px;
+  transition: box-shadow 0.2s;
+}
+
+.slide-go-enter-active, .slide-go-leave-active {
+  transition: opacity 0.35s cubic-bezier(.4,2,.6,1), transform 0.4s cubic-bezier(.4,2,.6,1);
+}
+
+.slide-go-enter-from, .slide-go-leave-to {
+  opacity: 0;
+  transform: translateX(-24px) scale(0.8);
+}
+
+.slide-go-enter-to, .slide-go-leave-from {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.search-go {
+  margin-left: 4px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  transition: filter 0.2s;
+}
+
+.search-go img {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 6px #ffd700);
+}
+
+.search-anim-wrap .search-icon {
+  transition: margin-right 0.4s cubic-bezier(.4,2,.6,1), transform 0.4s cubic-bezier(.4,2,.6,1);
+}
+
+.search-anim-wrap .search-icon:has(+ .v-enter-active),
+.search-anim-wrap .search-icon:has(+ .creative-input) {
+  margin-right: 12px;
+  transform: translateX(-8px);
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 180px;
+  margin-right: 180px;
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .main-content {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .floating-filter-bar, .floating-search-bar {
+    display: none;
+  }
 }
 
 .page-header.detective-bg {
@@ -512,224 +835,5 @@ const goToDetail = (soup) => {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 15px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.creative-filter {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-  margin-bottom: 18px;
-  background: #fffbe6;
-  border-radius: 18px;
-  box-shadow: 0 2px 12px rgba(44,62,80,0.08);
-  padding: 12px 18px;
-}
-.filter-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.filter-label {
-  font-weight: bold;
-  color: #2d3e50;
-  margin-right: 4px;
-}
-.difficulty-chip, .tag-chip {
-  display: inline-block;
-  padding: 6px 16px;
-  border-radius: 16px;
-  background: #e0eafc;
-  color: #2d3e50;
-  font-size: 15px;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-right: 4px;
-  user-select: none;
-  box-shadow: 0 1px 4px rgba(44,62,80,0.04);
-}
-.difficulty-chip.active {
-  background: linear-gradient(90deg, #ffd700 60%, #ffe066 100%);
-  color: #2d3e50;
-  font-weight: bold;
-  box-shadow: 0 2px 8px #ffd70033;
-}
-.tag-chip.active {
-  background: linear-gradient(90deg, #4f8cff 60%, #6ed0ff 100%);
-  color: #fff;
-  font-weight: bold;
-  box-shadow: 0 2px 8px #4f8cff33;
-}
-.filter-clear {
-  margin-left: 12px;
-  color: #ff6f61;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: bold;
-  border-bottom: 1px dashed #ff6f61;
-  transition: color 0.2s;
-}
-.filter-clear:hover {
-  color: #d7263d;
-}
-@media (max-width: 600px) {
-  .creative-filter {
-    flex-direction: column;
-    gap: 10px;
-    padding: 8px 6px;
-  }
-  .difficulty-chip, .tag-chip {
-    font-size: 13px;
-    padding: 5px 10px;
-  }
-}
-
-.search-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.search-anim-wrap {
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-.search-icon {
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  border-radius: 50%;
-  background: rgba(230, 236, 255, 0.7);
-  box-shadow: 0 2px 8px rgba(44,62,80,0.04);
-  opacity: 0.85;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: margin-right 0.4s cubic-bezier(.4,2,.6,1), transform 0.4s cubic-bezier(.4,2,.6,1);
-  margin-right: 0;
-}
-.search-icon img {
-  width: 60%;
-  height: 60%;
-  transition: transform 0.3s, filter 0.3s;
-}
-.search-icon img.active {
-  transform: rotate(-20deg) scale(1.1);
-  filter: drop-shadow(0 0 8px #ffd700);
-}
-.search-anim-wrap {
-  min-width: 40px;
-}
-.search-anim-wrap .search-icon {
-  z-index: 2;
-}
-.slide-input-enter-active, .slide-input-leave-active {
-  transition: width 0.4s cubic-bezier(.4,2,.6,1), opacity 0.35s cubic-bezier(.4,2,.6,1), margin-left 0.4s cubic-bezier(.4,2,.6,1);
-}
-.slide-input-enter-from, .slide-input-leave-to {
-  width: 0;
-  opacity: 0;
-  margin-left: 0;
-}
-.slide-input-enter-to, .slide-input-leave-from {
-  width: 180px;
-  opacity: 1;
-  margin-left: 12px;
-}
-.creative-input {
-  width: 180px;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 24px;
-  background: #fff;
-  font-size: 16px;
-  color: #2d3e50;
-  box-shadow: 0 2px 8px rgba(44,62,80,0.06);
-  outline: none;
-  margin-left: 12px;
-  transition: box-shadow 0.2s;
-}
-.slide-go-enter-active, .slide-go-leave-active {
-  transition: opacity 0.35s cubic-bezier(.4,2,.6,1), transform 0.4s cubic-bezier(.4,2,.6,1);
-}
-.slide-go-enter-from, .slide-go-leave-to {
-  opacity: 0;
-  transform: translateX(-24px) scale(0.8);
-}
-.slide-go-enter-to, .slide-go-leave-from {
-  opacity: 1;
-  transform: translateX(0) scale(1);
-}
-.search-go {
-  margin-left: 4px;
-  cursor: pointer;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  transition: filter 0.2s;
-}
-.search-go img {
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 0 6px #ffd700);
-}
-.search-anim-wrap .search-icon {
-  transition: margin-right 0.4s cubic-bezier(.4,2,.6,1), transform 0.4s cubic-bezier(.4,2,.6,1);
-}
-.search-anim-wrap .search-icon:has(+ .v-enter-active),
-.search-anim-wrap .search-icon:has(+ .creative-input) {
-  margin-right: 12px;
-  transform: translateX(-8px);
-}
-@media (max-width: 768px) {
-  .page-header {
-    flex-direction: column;
-    text-align: center;
-    gap: 20px;
-  }
-  
-  .page-title {
-    font-size: 36px;
-  }
-  
-  .soup-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .header-decoration {
-    display: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .soup-list-container {
-    padding: 10px;
-  }
-  
-  .page-header {
-    padding: 30px 20px;
-  }
-  
-  .page-title {
-    font-size: 28px;
-  }
-  
-  .filter-section {
-    padding: 20px;
-  }
-}
-
-@media (max-width: 600px) {
-  .page-header.detective-bg {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px !important;
-  }
-  .creative-input { width: 110px; font-size: 15px; }
-  .slide-input-enter-to, .slide-input-leave-from {
-    width: 110px;
-  }
 }
 </style>

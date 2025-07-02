@@ -6,6 +6,7 @@ import com.turtle.common.result.Result;
 import com.turtle.pojo.dto.SoupDTO;
 import com.turtle.pojo.dto.SoupPageQueryDTO;
 import com.turtle.pojo.entity.Soup;
+import com.turtle.pojo.vo.SoupVO;
 
 public interface SoupService extends IService<Soup> {
     // 上传题目
@@ -15,5 +16,5 @@ public interface SoupService extends IService<Soup> {
     PageResult getSoupListByPage(SoupPageQueryDTO soupPageQueryDTO);
 
     // 根据ID查询题目
-    Result<Soup> getSoupById(Long id);
+    Result<SoupVO> getSoupById(Long id);
 }

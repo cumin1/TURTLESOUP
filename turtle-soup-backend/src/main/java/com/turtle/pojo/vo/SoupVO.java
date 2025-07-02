@@ -1,18 +1,21 @@
 package com.turtle.pojo.vo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SoupPageQueryVO implements Serializable {
+public class SoupVO implements Serializable {
     // 题目ID
     private Long id;
 
@@ -25,6 +28,12 @@ public class SoupPageQueryVO implements Serializable {
     // 难度（1-5）
     private Integer difficulty;
 
-    // 题目分类
-    private List<Long> tagIds;
+    // 创建者ID
+    private Long creatorId;
+
+    // 创建时间
+    private LocalDateTime createdAt;
+
+    // 更新时间
+    private LocalDateTime updatedAt;
 }

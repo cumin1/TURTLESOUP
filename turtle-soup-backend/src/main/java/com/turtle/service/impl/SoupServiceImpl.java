@@ -13,6 +13,7 @@ import com.turtle.pojo.dto.SoupPageQueryDTO;
 import com.turtle.pojo.entity.Soup;
 import com.turtle.pojo.entity.SoupTag;
 import com.turtle.pojo.vo.SoupPageQueryVO;
+import com.turtle.pojo.vo.SoupVO;
 import com.turtle.service.SoupService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -88,12 +89,14 @@ public class SoupServiceImpl extends ServiceImpl<SoupMapper, Soup> implements So
      * @param id
      * @return
      */
-    public Result<Soup> getSoupById(Long id) {
+    public Result<SoupVO> getSoupById(Long id) {
         Soup soup = getById(id);
         if (soup == null) {
             return Result.error("题目不存在");
         }
-        return Result.success(soup);
+        SoupVO soupVO = new SoupVO();
+        BeanUtils.copyProperties(soup, soupVO);
+        return Result.success(soupVO);
     }
 
     /**

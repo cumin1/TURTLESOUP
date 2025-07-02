@@ -6,6 +6,7 @@ import com.turtle.common.result.Result;
 import com.turtle.pojo.dto.SoupDTO;
 import com.turtle.pojo.dto.SoupPageQueryDTO;
 import com.turtle.pojo.entity.Soup;
+import com.turtle.pojo.vo.SoupVO;
 import com.turtle.service.SoupService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -57,13 +58,13 @@ public class SoupController {
         // 2. 查数据库
         pageResult = soupService.getSoupListByPage(soupPageQueryDTO);
         // 3. 放入缓存
-        redisTemplate.opsForValue().set(key, pageResult, 5, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(key, pageResult);
         return Result.success(pageResult);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "根据id查询题目")
-    public Result<Soup> getSoupById(@PathVariable("id") Long id) {
+    public Result<SoupVO> getSoupById(@PathVariable("id") Long id) {
         log.info("查询id为:{}的题目",id);
         return soupService.getSoupById(id);
     }

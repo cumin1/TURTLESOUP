@@ -73,7 +73,8 @@
         <transition name="fade">
           <div v-if="showAnswer" class="mystic-answer-card">
             <h2>🌟 答案</h2>
-            <p>{{ soup?.answer }}</p>
+            <p v-if="soup?.answer">{{ soup.answer }}</p>
+            <p v-else>答案已隐藏，通关后可见</p>
           </div>
         </transition>
       </div>
