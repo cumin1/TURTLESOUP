@@ -4,12 +4,15 @@ import com.turtle.common.context.BaseContext;
 import com.turtle.common.result.Result;
 import com.turtle.pojo.dto.QuestionDTO;
 import com.turtle.pojo.entity.GameSession;
+import com.turtle.pojo.entity.QuestionLog;
 import com.turtle.service.GameService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -73,4 +76,17 @@ public class GameController {
         String resp = gameService.askAi(question);
         return Result.success(resp);
     }
+
+    /**
+     * 查看历史会话
+     */
+    @GetMapping("/sessionDetail/{sessionId}")
+    @Operation(summary = "查看历史会话")
+    public Result getSessionDetail(@PathVariable Long sessionId) {
+        log.info("查看历史会话: {}",sessionId);
+        List<QuestionLog> questionLogList = gameService.getSessionDetail(sessionId);
+        return Result.success(questionLogList);
+    }
+
+
 } 

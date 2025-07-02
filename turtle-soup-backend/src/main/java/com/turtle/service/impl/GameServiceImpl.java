@@ -262,4 +262,19 @@ public class GameServiceImpl extends ServiceImpl<GameSessionMapper, GameSession>
         }
         return "AI 未能给出有效回答";
     }
+
+    /**
+     * 查看历史会话
+     * @param sessionId
+     * @return
+     */
+    public List<QuestionLog> getSessionDetail(Long sessionId) {
+        // 从 question_log 表查询历史对话
+        List<QuestionLog> history = questionLogMapper.selectList(
+                new QueryWrapper<QuestionLog>()
+                        .eq("game_session_id", sessionId)
+                        .orderByAsc("created_at")
+        );
+        return history;
+    }
 }
