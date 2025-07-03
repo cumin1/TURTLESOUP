@@ -19,4 +19,6 @@ public interface GameService extends IService<GameSession> {
     void winGame(Long sessionId);
 
     List<QuestionLog> getSessionDetail(Long sessionId);
+
+    String getAnswer(Long soupId);
 }

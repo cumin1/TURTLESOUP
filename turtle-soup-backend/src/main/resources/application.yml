@@ -17,6 +17,12 @@ spring:
       port: ${turtle.redis.port}
       password: ${turtle.redis.password}
       database: ${turtle.redis.database}
+  mail:
+    host: ${turtle.mail.host}
+    username: ${turtle.mail.username}
+    password: ${turtle.mail.password}
+    properties:
+      from: ${turtle.mail.properties.from}
   ai:
     openai:
       api-key: ${turtle.apikey}

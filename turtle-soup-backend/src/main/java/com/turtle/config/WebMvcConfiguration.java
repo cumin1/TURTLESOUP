@@ -36,9 +36,9 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .addPathPatterns("/game/**")  // game相关的功能需要登录
                 .excludePathPatterns("/user/login")
                 .excludePathPatterns("/user/register")
+                .excludePathPatterns("/user/mail/**")
                 .excludePathPatterns("/soup/list") // 查看题目列表不需要用户权限
                 .excludePathPatterns("/soup/*"); // 查看题目详情不需要用户权限
-
     }
 
     /**

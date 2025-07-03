@@ -32,4 +32,12 @@ export function logout() {
     url: '/user/logout',
     method: 'post'
   })
+}
+
+// 发送邮箱验证码
+export function sendMail(email) {
+  return request({
+    url: `/user/mail/${email}`,
+    method: 'get'
+  })
 } 

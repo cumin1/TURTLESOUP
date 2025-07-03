@@ -73,3 +73,11 @@ export const winGame = (sessionId) => {
     params: { sessionId }
   })
 }
+
+// 获取谜题答案
+export const getSoupAnswer = (soupId) => {
+  return request({
+    url: `/game/answer/${soupId}`,
+    method: 'get'
+  })
+}

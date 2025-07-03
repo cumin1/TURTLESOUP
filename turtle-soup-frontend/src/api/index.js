@@ -5,7 +5,8 @@ import Cookies from 'js-cookie'
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API || 'http://localhost:8080',
-  timeout: 10000
+  timeout: 10000,
+  withCredentials: true
 })
 
 // 请求拦截器

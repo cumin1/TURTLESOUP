@@ -10,6 +10,7 @@ import com.turtle.pojo.vo.UserLoginVO;
 import com.turtle.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 @Tag(name = "用户相关接口")
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
+@CrossOrigin(origins = "http://localhost:8080",
+        allowedHeaders = "*",
+        allowCredentials = "true",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 public class UserController {
 
     @Autowired
@@ -34,10 +38,18 @@ public class UserController {
 
     @PostMapping("/register")
     @Operation(summary = "用户注册")
-    public Result register(@RequestBody UserDTO userDTO){
+    public Result register(@RequestBody UserDTO userDTO,HttpSession session){
         log.info("用户注册: {}",userDTO.toString());
-        Result result = userService.register(userDTO);
+        Result result = userService.register(userDTO,session.getId());
         return result;
+    }
+
+    @GetMapping("/mail/{email}")
+    @Operation(summary = "发送验证码")
+    public Result mail(@PathVariable String email, HttpSession session){
+        log.info("发送验证码: {}",email);
+        userService.sendEmail(email,session.getId());
+        return Result.success();
     }
 
     @GetMapping("/info")

@@ -11,7 +11,7 @@ import com.turtle.pojo.vo.UserLoginVO;
 
 public interface UserService extends IService<User> {
     // 用户注册
-    Result register(UserDTO userDTO);
+    Result register(UserDTO userDTO,String sessionId);
 
     // 用户登录
     Result<UserLoginVO> login(UserDTO userDTO);
@@ -21,4 +21,7 @@ public interface UserService extends IService<User> {
 
     // 查看用户游玩过的游戏
     PageResult games(UserGamesPageDTO userGamesPageDTO);
+
+    // 发送验证码
+    void sendEmail(String email,String sessionId);
 }

@@ -285,4 +285,17 @@ public class GameServiceImpl extends ServiceImpl<GameSessionMapper, GameSession>
         );
         return history;
     }
+
+    /**
+     * 查看题目答案
+     * @param soupId
+     * @return
+     */
+    public String getAnswer(Long soupId) {
+        Soup soup = soupMapper.selectById(soupId);
+        if (soup == null) {
+            throw new BaseException(SOUP_NOT_FOUND);
+        }
+        return soup.getAnswer();
+    }
 }

@@ -53,6 +53,29 @@
             />
           </el-form-item>
 
+          <el-form-item v-if="registerForm.email">
+            <el-row :gutter="10" style="width:100%">
+              <el-col :span="16">
+                <el-input
+                  v-model="registerForm.code"
+                  placeholder="请输入验证码"
+                  size="large"
+                  class="custom-input"
+                />
+              </el-col>
+              <el-col :span="8">
+                <el-button
+                  :disabled="mailBtnDisabled || !registerForm.email"
+                  size="large"
+                  @click="handleSendMail"
+                  style="width:100%"
+                >
+                  {{ mailBtnText }}
+                </el-button>
+              </el-col>
+            </el-row>
+          </el-form-item>
+
           <el-form-item>
             <el-button
               type="primary"
@@ -85,6 +108,7 @@ import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores/user'
+import { sendMail } from '@/api/user'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -96,8 +120,13 @@ const registerForm = reactive({
   username: '',
   password: '',
   confirmPassword: '',
-  email: ''
+  email: '',
+  code: ''
 })
+
+const mailBtnText = ref('发送验证码')
+const mailBtnDisabled = ref(false)
+let mailTimer = null
 
 const validateConfirmPassword = (rule, value, callback) => {
   if (value === '') {
@@ -126,14 +155,46 @@ const registerRules = {
   ]
 }
 
+const handleSendMail = async () => {
+  if (!registerForm.email) {
+    ElMessage.warning('请输入邮箱')
+    return
+  }
+  // 简单校验邮箱格式
+  const emailReg = /^[^@\s]+@[^@\s]+\.[^@\s]+$/
+  if (!emailReg.test(registerForm.email)) {
+    ElMessage.warning('请输入正确的邮箱地址')
+    return
+  }
+  mailBtnDisabled.value = true
+  mailBtnText.value = '发送中...'
+  try {
+    await sendMail(registerForm.email)
+    ElMessage.success('验证码已发送，请查收邮箱')
+    let count = 60
+    mailBtnText.value = `${count}s后重发`
+    mailTimer = setInterval(() => {
+      count--
+      mailBtnText.value = `${count}s后重发`
+      if (count <= 0) {
+        clearInterval(mailTimer)
+        mailBtnText.value = '发送验证码'
+        mailBtnDisabled.value = false
+      }
+    }, 1000)
+  } catch (e) {
+    ElMessage.error('验证码发送失败')
+    mailBtnText.value = '发送验证码'
+    mailBtnDisabled.value = false
+  }
+}
+
 const handleRegister = async () => {
   try {
     await registerFormRef.value.validate()
     loading.value = true
-    
     const { confirmPassword, ...registerData } = registerForm
     await userStore.register(registerData)
-    
     ElMessage.success('注册成功！请登录')
     router.push('/login')
   } catch (error) {

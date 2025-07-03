@@ -88,5 +88,16 @@ public class GameController {
         return Result.success(questionLogList);
     }
 
+    /**
+     * 查看题目答案
+     */
+    @GetMapping("/answer/{soupId}")
+    @Operation(summary = "查看题目答案")
+    public Result getAnswer(@PathVariable Long soupId) {
+        log.info("查看题目答案: {}",soupId);
+        String answer = gameService.getAnswer(soupId);
+        return Result.success(answer);
+    }
+
 
 } 

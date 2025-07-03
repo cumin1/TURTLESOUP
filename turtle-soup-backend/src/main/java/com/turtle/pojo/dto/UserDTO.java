@@ -18,4 +18,6 @@ public class UserDTO implements Serializable {
     private String password;
     // 电子邮箱（唯一）
     private String email;
+    // 验证码
+    private String code;
 }

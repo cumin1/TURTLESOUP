@@ -62,14 +62,8 @@ export const useUserStore = defineStore('user', {
     },
 
     // 用户登出
-    async logout() {
-      try {
-        await logout()
-      } catch (error) {
-        console.error('登出失败:', error)
-      } finally {
-        this.resetUserState()
-      }
+    logout() {
+      this.resetUserState()
     },
 
     // 重置用户状态

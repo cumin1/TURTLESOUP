@@ -61,7 +61,7 @@
             </div>
           </div>
           <div class="mystic-actions">
-            <el-button @click="showAnswer = !showAnswer" class="mystic-action-btn">
+            <el-button @click="handleViewAnswer" class="mystic-action-btn">
               {{ showAnswer ? '隐藏答案' : '查看答案' }}
             </el-button>
             <el-button @click="resetGame" class="mystic-action-btn">重新开始</el-button>
@@ -92,7 +92,7 @@
 import { ref, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { getSoupDetail } from '@/api/soupApi'
+import { getSoupDetail, getSoupAnswer } from '@/api/soupApi'
 import { askAi, winGame, stopGame, getGameStatus } from '@/api/soupApi'
 import request from '@/api/index'
 
@@ -229,6 +229,25 @@ const handleStopGame = async () => {
   }
 }
 
+const handleViewAnswer = async () => {
+  if (showAnswer.value) {
+    showAnswer.value = false
+    return
+  }
+  if (!soup.value) return
+  if (soup.value.answer) {
+    showAnswer.value = true
+    return
+  }
+  try {
+    const res = await getSoupAnswer(soupId.value)
+    soup.value.answer = res.data
+    showAnswer.value = true
+  } catch (e) {
+    ElMessage.error('获取答案失败')
+  }
+}
+
 onMounted(async () => {
   if (sessionId.value) {
     // 加载历史对话
@@ -238,11 +257,23 @@ onMounted(async () => {
         method: 'get'
       })
       if (Array.isArray(res.data)) {
-        chatMessages.value = res.data.map(item => ({
-          type: item.type === 'AI' ? 'ai' : 'user',
-          content: item.question || item.aiAnswer,
-          time: item.createdAt ? new Date(item.createdAt).toLocaleTimeString() : ''
-        })).sort((a, b) => new Date(a.time) - new Date(b.time))
+        chatMessages.value = []
+        res.data.forEach(item => {
+          if (item.question) {
+            chatMessages.value.push({
+              type: 'user',
+              content: item.question,
+              time: item.createdAt ? new Date(item.createdAt).toLocaleTimeString() : ''
+            })
+          }
+          if (item.aiAnswer) {
+            chatMessages.value.push({
+              type: 'ai',
+              content: item.aiAnswer,
+              time: item.createdAt ? new Date(item.createdAt).toLocaleTimeString() : ''
+            })
+          }
+        })
       }
     } catch (e) {
       // 忽略加载历史对话失败

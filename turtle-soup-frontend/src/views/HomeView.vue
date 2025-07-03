@@ -20,6 +20,50 @@
       </div>
     </div>
 
+    <!-- 新增：玩法引导区 -->
+    <div class="guide-section card-container">
+      <h2 class="section-title">如何玩海龟汤？</h2>
+      <div class="guide-steps">
+        <div class="guide-step">
+          <img src="/detective.svg" class="guide-icon" alt="detective" />
+          <div>
+            <h3>1. 选择谜题</h3>
+            <p>浏览题库，挑选你感兴趣的海龟汤谜题。</p>
+          </div>
+        </div>
+        <div class="guide-step">
+          <img src="/magnifier.svg" class="guide-icon" alt="magnifier" />
+          <div>
+            <h3>2. 与AI互动</h3>
+            <p>向AI助手提问，获取线索，逐步接近真相。</p>
+          </div>
+        </div>
+        <div class="guide-step">
+          <img src="/footprint.svg" class="guide-icon" alt="footprint" />
+          <div>
+            <h3>3. 推理真相</h3>
+            <p>大胆假设，小心求证，揭开谜题背后的故事！</p>
+          </div>
+        </div>
+        <div class="guide-step">
+          <img src="/detective.svg" class="guide-icon" alt="history" />
+          <div>
+            <h3>4. 查看历史</h3>
+            <p>随时回顾你的推理历程，挑战更高难度！</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 新增：趣味彩蛋区 -->
+    <div class="fun-section card-container">
+      <h2 class="section-title">趣味彩蛋</h2>
+      <div class="fun-egg">
+        <el-icon class="fun-egg-icon"><Turtle /></el-icon>
+        <span>{{ randomFunFact }}</span>
+      </div>
+    </div>
+
     <div class="features-section">
       <h2 class="section-title">游戏特色</h2>
       <div class="features-grid">
@@ -54,7 +98,7 @@ import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { Turtle, ChatDotRound, Collection, User } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
-import { onMounted, onBeforeUnmount } from 'vue'
+import { onMounted, onBeforeUnmount, ref } from 'vue'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -143,6 +187,20 @@ onBeforeUnmount(() => {
   cancelAnimationFrame(animationId)
   window.removeEventListener('resize', resizeCanvas)
 })
+
+const funFacts = [
+  '你知道吗？海龟汤的名字其实和海龟无关，而是源自一道"汤"谜题！',
+  '推理的关键：多问"为什么"，大胆假设，小心求证。',
+  '有些谜题看似离奇，其实真相往往很简单！',
+  'AI助手不会骗你，但也不会直接告诉你答案哦~',
+  '每一次推理，都是对思维的锻炼！',
+  '你能猜到本页面有多少只🐢吗？',
+  '谜题太难？试试和朋友一起推理吧！',
+  '海龟汤适合聚会、破冰、提升逻辑思维能力！',
+  '有趣的谜题能让你忘记时间，沉浸推理世界！',
+  '据说，最强的推理高手能三问之内猜出真相！',
+]
+const randomFunFact = funFacts[Math.floor(Math.random() * funFacts.length)]
 </script>
 
 <style scoped>
@@ -338,5 +396,58 @@ onBeforeUnmount(() => {
   .section-title {
     font-size: 32px;
   }
+}
+
+.guide-section {
+  margin: 48px auto 0 auto;
+  max-width: 900px;
+  background: linear-gradient(120deg, #f7f8fa 60%, #e0eafc 100%);
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(167,199,231,0.08);
+  padding: 32px 24px;
+}
+.guide-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px 24px;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+.guide-step {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex: 1 1 220px;
+  min-width: 220px;
+}
+.guide-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.06);
+  padding: 8px;
+}
+.fun-section {
+  margin: 40px auto 0 auto;
+  max-width: 700px;
+  background: linear-gradient(120deg, #e0eafc 60%, #f7f8fa 100%);
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(167,199,231,0.08);
+  padding: 28px 20px;
+  text-align: center;
+}
+.fun-egg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  font-size: 1.15rem;
+  color: #6e6bc4;
+  margin-top: 12px;
+}
+.fun-egg-icon {
+  font-size: 2.2rem;
+  color: #ffd700;
 }
 </style>

@@ -23,7 +23,7 @@
             <el-button v-if="sessionId && gameStatus === '进行中'" type="primary" @click="continueGame">继续游戏</el-button>
             <el-button v-if="sessionId && gameStatus === '进行中'" type="danger" @click="handleStopGame">结束游戏</el-button>
             <el-button v-else type="primary" @click="startGame">开始游戏</el-button>
-            <el-button @click="showAnswer = !showAnswer">
+            <el-button @click="handleViewAnswer">
               {{ showAnswer ? '隐藏答案' : '查看答案' }}
             </el-button>
           </div>
@@ -52,7 +52,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { getSoupDetail, startGame as apiStartGame, stopGame, getGameStatus } from '@/api/soupApi'
+import { getSoupDetail, startGame as apiStartGame, stopGame, getGameStatus, getSoupAnswer } from '@/api/soupApi'
 import { useUserStore } from '@/stores/user'
 
 const route = useRoute()
@@ -139,6 +139,26 @@ const continueGame = () => {
     return
   }
   router.push({ path: `/game/${sessionId.value}`, query: { soupId: soup.value.id } })
+}
+
+const handleViewAnswer = async () => {
+  if (showAnswer.value) {
+    showAnswer.value = false
+    return
+  }
+  if (!soup.value) return
+  // 若已有答案则直接显示
+  if (soup.value.answer) {
+    showAnswer.value = true
+    return
+  }
+  try {
+    const res = await getSoupAnswer(soup.value.id)
+    soup.value.answer = res.data
+    showAnswer.value = true
+  } catch (e) {
+    ElMessage.error('获取答案失败')
+  }
 }
 
 onMounted(() => {
